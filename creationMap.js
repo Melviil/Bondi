@@ -25,8 +25,7 @@
         var place = prompt("Where did you took the pic ?", " ");
         var year = prompt("When did you took the pic ?", " ");
         var image = prompt("Send us the URL!");
-         var response = https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyD1xK9LoXfFhnUvIopgzYSNxioyhHDSbuU
-
+         
        
         if ( lat != null && lng != null && person != null && place != null && year != null && image != null)
          var marker = new L.marker(e.latlng);
