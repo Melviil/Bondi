@@ -8,6 +8,7 @@
 	    <link rel="stylesheet" href="http://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
 	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1xK9LoXfFhnUvIopgzYSNxioyhHDSbuU"></script>
 	    <script src="http://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+	    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	    <script type="text/javascript" src="bootbox.min.js"></script>
 	     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
