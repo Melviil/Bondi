@@ -17,9 +17,9 @@
  	
  	<body onload="initMap()">
 <div id="map" ></div>
-<input  type="image" id="addmarker" class="leaflet-control-zoom leaflet-bar leaflet-control" src="../bondi/custom/add.png" alt="Add Marker" />
-<input  type="image" id="admin" class="leaflet-control-zoom leaflet-bar leaflet-control" src="../bondi/custom/admin.png" alt="Admin page " />
-<input  type="image" id="about" class="leaflet-control-zoom leaflet-bar leaflet-control" src="../bondi/custom/about.png" alt="Admin page " />
+<input  type="image" id="addmarker" class="leaflet-control-zoom leaflet-bar leaflet-control" src="custom/add.png" alt="Add Marker" />
+<input  type="image" id="admin" class="leaflet-control-zoom leaflet-bar leaflet-control" src="custom/admin.png" alt="Admin page " />
+<input  type="image" id="about" class="leaflet-control-zoom leaflet-bar leaflet-control" src="custom/about.png" alt="Admin page " />
 
  	 </body>
 </html>
