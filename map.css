@@ -1,0 +1,29 @@
+ 	.leaflet-control-attribution.leaflet-control {
+    display: none !important;
+}
+ 	.pic{
+ 		max-width: 400px;
+ 		max-height: 400px;
+ 	}
+ 	.
+ 	.post p{
+ 		font-family: cursive;
+ 	}
+ 	#addmarker{
+ 		position: absolute;
+    right: 0;
+    max-width: 75px;
+    top: 47%;
+ 	}
+ 	#admin{
+ 		position: absolute;
+    right: 0;
+    max-width: 75px;
+    top: 36%;
+ 	}
+ 	#about{
+ 		position: absolute;
+    right: 0;
+    max-width: 75px;
+    top: 58%;
+ 	}
