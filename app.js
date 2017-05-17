@@ -9,9 +9,31 @@ var bodyParser = require('body-parser');
 //connection database local
 var mongo = require('mongodb');
 var monk = require('monk');
-var mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'localhost:27017/Bondi';
+//var db = process.env.MONGOLAB_URI ||
+  //process.env.MONGOHQ_URL ||
+  //'localhost:27017/Bondi';
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect("process.env.MONGOLAB_URI", function (err, db) {
+    
+    db.collection('personcollection', function (err, collection) {
+        
+        collection.insert({ id: 1, firstName: 'Steve', lastName: 'Jobs' });
+        collection.insert({ id: 2, firstName: 'Bill', lastName: 'Gates' });
+        collection.insert({ id: 3, firstName: 'James', lastName: 'Bond' });
+        
+        
+
+        db.collection('personcollection').count(function (err, count) {
+            if (err) throw err;
+            
+            console.log('Total Rows: ' + count);
+        });
+    });
+                
+});
+
 
 
 var index = require('./routes/index');
