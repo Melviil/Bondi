@@ -14,9 +14,7 @@ var monk = require('monk');
   //'localhost:27017/Bondi';
 
 var db = monk('heroku_6pwg8vg8:heroku_6pwg8vg8@lds137121.mlab.com:37121/heroku_6pwg8vg8');
-db.collection('usercollection').find().toArray(function(err, docs) {
-    console.log(JSON.stringify(docs));
-});
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
