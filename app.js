@@ -10,25 +10,8 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 
-var MongoClient = require('mongodb').MongoClient;
+var db = monk('localhost:27017/Bondi');
 
-// Connect to the db
-MongoClient.connect("mongodb://heroku_6pwg8vg8:heroku_6pwg8vg8@ds137121.mlab.com:37121/heroku_6pwg8vg8", function(err, db) {
-  if(!err) {
-    console.log("We are connected");
-  }
-});
-
-
-
-//var db = MongoClient.connect('mongodb://heroku_6pwg8vg8:heroku_6pwg8vg8@ds137121.mlab.com:37121/heroku_6pwg8vg8') // returns a Promise
-
-//var db = monk('localhost:27017/Bondi');
-//var db = process.env.MONGOLAB_URI ||
-  //process.env.MONGOHQ_URL ||
-  //'mongodb://heroku_6pwg8vg8:heroku_6pwg8vg8@ds137121.mlab.com:37121/heroku_6pwg8vg8';
-//connection databse
-//connection databse local
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -36,10 +19,10 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-//app.engine('html', require('ejs').renderFile);
-//app.set('view engine', 'html');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -47,6 +30,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/img',express.static(path.join(__dirname, 'public/images')));
+app.use('/js',express.static(path.join(__dirname, 'public/javascripts')));
+app.use('/css',express.static(path.join(__dirname, 'public/stylesheets')));
 
 app.use(function(req,res,next){
     req.db = db;

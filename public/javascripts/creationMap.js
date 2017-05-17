@@ -11,8 +11,8 @@ var year;
 var marker;
     function initMap() {
         var bounds = new L.LatLngBounds(
-            new L.LatLng(-50.051129, -150.000000),
-            new L.LatLng(50.051129, 150.989213));
+            new L.LatLng(-60.000000, -110.000000),
+            new L.LatLng(83.000000, 110.000000));
         map = L.map('map').fitBounds(bounds);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         options = {
@@ -22,20 +22,30 @@ var marker;
             tms: false,
 
         };
-      
+        blueIcon = L.icon({
+            className:'blueIcon',
+            iconUrl: '/img/marker-icon.png',
+            shadowUrl: '/img/marker-shadow.png',
+
+            iconSize:     [50,81], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25, 81], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
 
         map.on('zoomend', function () {
     if (map.getZoom() < 2) {
          map.setMaxBounds([
-      [-50.051129, -150.000000],
-      [50.051129, 150.989213]
+      [-60.000000, -110.000000],
+      [83.000000, 110.000000]
     ]);
          map.setZoom(2);
     }
     
 });
-
-         layer = L.tileLayer('{z}/{x}/{y}.png', options).addTo(map);
+        // commentaire a enlever pour voir la map
+         //layer = L.tileLayer('{z}/{x}/{y}.png', options).addTo(map);
           map.on('click', function(e){
           newMarkerMap(e);
         }); 
@@ -104,7 +114,7 @@ var marker;
 
            
             if ( lat != null && lng != null && person != null && year != null && image != null){ 
-                marker = new L.marker(e.latlng);
+                marker = new L.marker(e.latlng, {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
             }
@@ -134,7 +144,7 @@ var marker;
             
            });
             if ( lat != null && lng != null && person != null && place != null && year != null && image != null){ 
-                marker = new L.marker([lat,lng]);
+                marker = new L.marker([lat,lng], {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
             }

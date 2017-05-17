@@ -14,6 +14,10 @@ module.exports = router;
 router.get('/helloworld', function(req, res) {
     res.render('helloworld', { title: 'Hello, World!' });
 });
+/ GET Map page. /
+router.get('/index', function(req, res) {
+    res.render('index', { title: 'Bondi' });
+});
 
 / GET Userlist page. /
 router.get('/userlist', function(req, res) {
