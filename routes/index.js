@@ -1,0 +1,94 @@
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+exports.index = function(req, res){
+res.render('index', { title: 'ejs' });};
+
+module.exports = router;
+
+/ GET Hello World page. /
+router.get('/helloworld', function(req, res) {
+    res.render('helloworld', { title: 'Hello, World!' });
+});
+
+/ GET Userlist page. /
+router.get('/userlist', function(req, res) {
+    var db = req.db;
+    var collection = db.get('usercollection');
+    collection.find({},{},function(e,docs){
+        res.render('userlist', {
+            "userlist" : docs
+        });
+    });
+});
+/ GET New User page. /
+router.get('/newuser', function(req, res) {
+    res.render('newuser', { title: 'Add New User' });
+});
+/ POST to Add marker Service /
+router.post('/addmarker', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    // Get all the markers informations
+    var pseudo = req.username;
+    var latitude = req.lat;
+    var longitude = req.lng;
+    var year = req.year;
+    var url = req.url;
+    // Set our collection
+    var collection = db.get('markercollection');
+
+    // Submit the marker to the DB
+    collection.insert({
+        "pseudo" : pseudo,
+        "year" : year,
+        "latitude" : latitude,
+        "longitude" : longitude,
+        "url" : url
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            //TODO
+            //res.redirect("userlist");
+        }
+    });
+});
+/ POST to Add city Service /
+router.post('/addcity', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    // Get all the markers informations
+    var name = req.name;
+    var latitude = req.lat;
+    var longitude = req.lng;
+  
+    // Set our collection
+    var collection = db.get('markercollection');
+
+    // Submit the marker to the DB
+    collection.insert({
+        "pseudo" : pseudo,
+        "latitude" : latitude,
+        "longitude" : longitude
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            //TODO
+            //res.redirect("userlist");
+        }
+    });
+});
