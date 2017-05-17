@@ -14,34 +14,6 @@ var monk = require('monk');
   //'localhost:27017/Bondi';
 
 //var db = monk('heroku_6pwg8vg8:heroku_6pwg8vg8@lds137121.mlab.com:37121/heroku_6pwg8vg8');
-mongo.connect(process.env.MONGOLAB_URI, {}, function(error, db){
-
-  // console.log will write to the heroku log which can be accessed via the 
-  // command line as "heroku logs"
-  db.addListener("error", function(error){
-    console.log("Error connecting to MongoLab");
-  });
-  
-  db.createCollection('requests', function(err, collection){
-    db.collection('requests', function(err, collection){
-      var requestCollection = collection;
-      connect(
-        connect.favicon(),                    // Return generic favicon
-        connect.query(),                      // populate req.query with query parameters
-        connect.bodyParser(),                 // Get JSON data from body
-        function(req, res, next){             // Handle the request
-          res.setHeader("Content-Type", "application/json");
-          if(req.query != null) {
-            requestCollection.insert(req.query, function(error, result){
-              // result will have the object written to the db so let's just
-              // write it back out to the browser
-              res.write(JSON.stringify(result));
-            });
-          }
-          
-          res.end();
-        }
-      ).listen(process.env.PORT || 8080);
 
 
 var index = require('./routes/index');
