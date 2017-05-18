@@ -92,6 +92,16 @@ var marker;
                 marker = new L.marker(e.latlng, {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
+                $.ajax({
+                   // url: 'http://localhost:3000/addmarker',
+                    url: "https://bondi.herokuapp.com/addmarker",
+                    type: "POST",
+                    data: JSON.stringify(({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image})),
+                    contentType: "application/json",
+                     sucess: function() {
+                        console.log('sucess');
+                    }
+                });
             }
         };
 
