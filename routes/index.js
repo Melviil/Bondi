@@ -30,8 +30,9 @@ router.get('/index', function(req, res) {
         res.render('index', {
             "markerlist" : docs
         });
-    });
+    });  
 });
+
 
 / GET Userlist page. /
 router.get('/userlist', function(req, res) {
@@ -57,25 +58,31 @@ router.get('/newuser', function(req, res) {
 });
 / POST to Add marker Service /
 router.post('/addmarker', function(req, res) {
-
+    console.log("add a marker");
     // Set our database ( bondi here) 
+   
     var db = req.db;
 
     // Get all the markers informations
-    var pseudo = req.username;
-    var latitude = req.lat;
-    var longitude = req.lng;
-    var year = req.year;
-    var url = req.url;
+    var pseudo = req.body.person;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var year = req.body.year;
+    var place = req.body.place;
+    var url = req.body.url;
+   
+
+
     // Set our collection
     var collection = db.get('markercollection');
 
     // Submit the marker to the DB
-    collection.insert({
+   collection.insert({
         "pseudo" : pseudo,
-        "year" : year,
         "latitude" : latitude,
         "longitude" : longitude,
+        "year" : year,
+        "place" : place,
         "url" : url
     }, function (err, doc) {
         if (err) {
