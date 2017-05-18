@@ -137,7 +137,7 @@ var marker;
                     url: "https://bondi.herokuapp.com/addmarker",
                     type: "POST",
                     data: JSON.stringify(({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image})),
-                    contentType: "application/json",
+                    dataType:"jsonp",
                      sucess: function() {
                         console.log('sucess');
                     }
