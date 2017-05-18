@@ -165,8 +165,8 @@ function addMarkers(){
               //Fonction allant chercher les données de tous les markers
         $.ajax({
             method: "GET",
-           url: "http://localhost:3000/markerlist",
-           //url: "https://bondi.herokuapp.com/markerlist",
+           //url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
             dataType: "json"}
             ).done(function(data){
                 for ( var i in data){
