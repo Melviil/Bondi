@@ -63,7 +63,8 @@ var marker;
         function newMarkerMap(e){
              lat = e.latlng.lat;
              lng = e.latlng.lng;
-           
+            console.log(lat);
+            console.log(lng);
              person = prompt("Please enter your name:", "");
             if (person != null){
               //  var place = prompt("Where did you took the pic ? ( no accent pls)", "");
@@ -96,7 +97,7 @@ var marker;
                     url: "https://bondi.herokuapp.com/addmarker",
                     type: "POST",
                     data: JSON.stringify(({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image})),
-                    contentType: "jsonp",
+                    dataType:"jsonp",
                      sucess: function() {
                         console.log('sucess');
                     }
@@ -136,7 +137,7 @@ var marker;
                     url: "https://bondi.herokuapp.com/addmarker",
                     type: "POST",
                     data: JSON.stringify(({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image})),
-                    contentType: "jsonp",
+                    dataType:"jsonp",
                      sucess: function() {
                         console.log('sucess');
                     }
