@@ -10,6 +10,7 @@ var place;
 var year;
 var marker;
     function initMap() {
+
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
             new L.LatLng(83.000000, 110.000000));
@@ -41,6 +42,7 @@ var marker;
       [83.000000, 110.000000]
     ]);
          map.setZoom(2);
+
     }
     
 });
@@ -55,7 +57,7 @@ var marker;
             newMarkerButton(e);
             
         };
-    
+        addMarkers();
     };
        
         function newMarkerMap(e){
@@ -149,9 +151,24 @@ var marker;
                 marker.addTo(map);
             }
         };
-    
+function addMarkers(){
+              //Fonction allant chercher les données de tous les markers
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:3000/markerlist",
+            dataType: "json"}).done(function(data){
+                for ( var i in data){
+                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
+                    marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + " ,data[i].place " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
+                    marker.addTo(map);
+                }
 
-            
+            }).fail(function(err){
+                console.log(err);
+            });
+
+           
+}
 
 
    

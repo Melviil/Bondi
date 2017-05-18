@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1.
+        Marker List
+    ul
+        each marker, i in markerlist
+            li
+                a(href="mailto:#{marker.email}")= user.firstName

@@ -3,7 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Bondi' });
+    var db = req.db;
+   /* var collection = db.get('markercollection');
+    collection.find({},{},function(e,docs){
+        res.render('index', {
+            "markerlist" : docs
+        });
+    });*/
 });
 exports.index = function(req, res){
 res.render('index', { title: 'ejs' });};
@@ -17,6 +24,13 @@ router.get('/helloworld', function(req, res) {
 / GET Map page. /
 router.get('/index', function(req, res) {
     res.render('index', { title: 'Bondi' });
+    var db = req.db;
+    var collection = db.get('markercollection');
+    collection.find({},{},function(e,docs){
+        res.render('index', {
+            "markerlist" : docs
+        });
+    });
 });
 
 / GET Userlist page. /
@@ -27,6 +41,14 @@ router.get('/userlist', function(req, res) {
         res.render('userlist', {
             "userlist" : docs
         });
+    });
+});
+/ GET MarkerList page. /
+router.get('/markerlist', function(req, res) {
+    var db = req.db;
+    var collection = db.get('markercollection');
+    collection.find({},{},function(e,docs){
+        res.status(200).json(docs);
     });
 });
 / GET New User page. /

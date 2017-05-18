@@ -12,8 +12,8 @@ var monk = require('monk');
 //var db = process.env.MONGOLAB_URI ||
   //process.env.MONGOHQ_URL ||
   //'localhost:27017/Bondi';
-
-var db = monk('heroku_6pwg8vg8:heroku_6pwg8vg8@lds137121.mlab.com:37121/heroku_6pwg8vg8');
+ 
+var db = monk('mongodb://admin:melvil@ds137121.mlab.com:37121/heroku_6pwg8vg8');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -21,10 +21,10 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-//app.engine('html', require('ejs').renderFile);
-//app.set('view engine', 'html');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
