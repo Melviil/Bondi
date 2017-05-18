@@ -62,7 +62,7 @@ router.post('/addmarker', function(req, res) {
     // Set our database ( bondi here) 
    
     var db = req.db;
-
+    console.log(req.body);
     // Get all the markers informations
     var pseudo = req.body.person;
     var latitude = req.body.latitude;
@@ -70,8 +70,7 @@ router.post('/addmarker', function(req, res) {
     var year = req.body.year;
     var url = req.body.url;
     var place = req.body.place;
-    console.log(peusdo);
-    console.log(latitude);
+    
 
     // Set our collection
     var collection = db.get('markercollection');
