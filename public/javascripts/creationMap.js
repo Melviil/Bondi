@@ -26,14 +26,14 @@ var data;
         };
         blueIcon = L.icon({
             className:'blueIcon',
-            iconUrl: '/img/marker-icon.png',
+            iconUrl: '/img/map-marker-icon.png',
             shadowUrl: '/img/marker-shadow.png',
 
-            iconSize:     [50,81], // size of the icon
+            iconSize:     [53,74], // size of the icon
             shadowSize:   [50, 64], // size of the shadow
             iconAnchor:   [25, 81], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
 
         map.on('zoomend', function () {
@@ -103,8 +103,8 @@ var data;
                 };
                 $.ajax({
                     method: "POST",
-                    url: 'http://localhost:3000/addmarker',
-                    //url: "https://bondi.herokuapp.com/addmarker",
+                    //url: 'http://localhost:3000/addmarker',
+                    url: "https://bondi.herokuapp.com/addmarker",
                     data: data,
                      dataType: "json"
                 });
@@ -117,7 +117,7 @@ var data;
            
             person = prompt("Please enter your name:", "");
             if (person != null){
-                place = prompt("Where did you took the pic ? ( no accent pls)", "");
+                place = prompt("Where did you took the pic ? ( no accent please)", "");
                 if (place != null){
                     year = prompt("When did you took the pic ?", "");
                     if (year != null){
