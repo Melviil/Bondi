@@ -77,7 +77,7 @@ var marker;
             }
              $.ajax({
                 async : false,
-                url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
+                url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
              
                     console.log(data.results[1].address_components[0].long_name);
                 
@@ -128,7 +128,7 @@ function addMarkers(){
               //Fonction allant chercher les données de tous les markers
         $.ajax({
             method: "GET",
-            url: "http://bondi.herokuapp.com/markerlist",
+            url: "https://bondi.herokuapp.com/markerlist",
             dataType: "json"}).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
