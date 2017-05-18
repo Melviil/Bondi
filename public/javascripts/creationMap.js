@@ -93,14 +93,11 @@ var marker;
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
                 $.ajax({
+                    method: "POST",
                     //url: '/addmarker',
                     url: "https://bondi.herokuapp.com/addmarker",
-                    method: "POST",
                     data: JSON.stringify({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image}),
-                    dataType: "json",
-                     sucess: function() {
-                        console.log('sucess');
-                    }
+                    dataType: "json"
                 });
             }
         };
@@ -133,14 +130,12 @@ var marker;
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
                  $.ajax({
+                    method: "POST",
                    //url: 'http://localhost:3000/addmarker',
                    url: "https://bondi.herokuapp.com/addmarker",
-                    method: "POST",
                     data: JSON.stringify({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image}),
-                   dataType: "json",
-                     sucess: function() {
-                        console.log('sucess');
-                    }
+                   dataType: "json"
+                     
                 });
             }
             //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
