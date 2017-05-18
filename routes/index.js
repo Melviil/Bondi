@@ -68,10 +68,10 @@ router.post('/addmarker', function(req, res) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
     var year = req.body.year;
-    var place = req.body.place;
     var url = req.body.url;
-   
-
+    var place = req.body.place;
+    console.log(peusdo);
+    console.log(latitude);
 
     // Set our collection
     var collection = db.get('markercollection');
