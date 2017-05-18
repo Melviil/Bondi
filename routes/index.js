@@ -57,7 +57,7 @@ router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
 });
 / POST to Add marker Service /
-router.post('/addmarker', function(req, res) {
+router.get('/addmarker', function(req, res) {
     console.log("add a marker");
     // Set our database ( bondi here) 
    
