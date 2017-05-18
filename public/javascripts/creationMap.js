@@ -75,11 +75,6 @@ var marker;
                     }
                 //}
             }
-           /*  $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+place+'&key=AIzaSyAp7TIdyY2Okit_RVUAU8DOHNoOCwfT0rs', function(data) {
-                   console.log(data.results[0].geometry.location.lat);
-                    console.log(data.results[0].geometry.location.lng);
-            
-                }); */
              $.ajax({
                 async : false,
                 url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
@@ -91,28 +86,6 @@ var marker;
                    
             
                 });
-                    /*
-                        if ( post.lat != null && post.lng != null && post.person != null && post.place != null && post.year != null && post.image != null)
-                            var marker = new L.marker(e.latlng);
-                            marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
-                            marker.addTo(map);
-
-                            });
-                            $.ajax({
-                                type: 'POST',
-                                data: JSON.stringify(data),
-                                contentType: 'application/json',
-                                url: 'http://localhost:3000/endpoint',                      
-                                success: function(data) {
-                                    console.log('success');
-                                    console.log(JSON.stringify(data));
-                                }
-                            });
-
-
-
-
-             */
 
            
             if ( lat != null && lng != null && person != null && year != null && image != null){ 
@@ -155,7 +128,7 @@ function addMarkers(){
               //Fonction allant chercher les données de tous les markers
         $.ajax({
             method: "GET",
-            url: "http://localhost:3000/markerlist",
+            url: "http://bondi.herokuapp.com/markerlist",
             dataType: "json"}).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
