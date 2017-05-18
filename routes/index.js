@@ -78,7 +78,7 @@ router.post('/addmarker', function(req, res) {
 
     // Submit the marker to the DB
    collection.insert({
-        "pseudo" : req,
+        "pseudo" : pseudo,
         "latitude" : latitude,
         "longitude" : longitude,
         "year" : year,
