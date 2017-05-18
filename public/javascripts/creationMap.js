@@ -123,7 +123,8 @@ var marker;
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
                  $.ajax({
-                    url: 'http://localhost:3000/addmarker',
+                   // url: 'http://localhost:3000/addmarker',
+                    url: "https://bondi.herokuapp.com/addmarker",
                     type: "POST",
                     data: JSON.stringify(({"person": person, "place" : place, "year":year, "latitude":lat, "longitude":lng, "url":image})),
                     contentType: "application/json",
@@ -141,7 +142,8 @@ function addMarkers(){
               //Fonction allant chercher les données de tous les markers
         $.ajax({
             method: "GET",
-            url: "http://localhost:3000/markerlist",
+           // url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
             dataType: "json"}).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
