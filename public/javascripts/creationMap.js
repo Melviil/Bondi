@@ -153,7 +153,7 @@ function addMarkers(){
         $.ajax({
             method: "GET",
            // url: "http://localhost:3000/markerlist",
-           //url: "https://bondi.herokuapp.com/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
             dataType: "json"}).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
