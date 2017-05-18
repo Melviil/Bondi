@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var cors = require('cors');
 
 //connection database local
 var mongo = require('mongodb');
@@ -19,7 +19,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-var cors = require('cors');
+
 
 app.use(cors({credentials: true, origin: true}));
 // view engine setup
