@@ -90,7 +90,7 @@ router.post('/addmarker', function(req, res) {
             res.send("There was a problem adding the information to the database.");
         }
         else {
-            //TODO
+            res.send(200);
             //res.redirect("userlist");
         }
     });
