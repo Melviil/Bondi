@@ -93,7 +93,7 @@ var bounds2 = new L.LatLngBounds(
                 });
 
            
-            if ( lat != null && lng != null && person != null && year != null && image != null){ 
+            if ( lat != null || lng != null || person != null || year != null || image != null){ 
                 marker = new L.marker(e.latlng, {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
@@ -138,7 +138,7 @@ var bounds2 = new L.LatLngBounds(
                     lng = data.results[0].geometry.location.lng;
             
            });
-            if ( lat != null && lng != null && person != null && place != null && year != null && image != null){ 
+            if ( lat != null || lng != null || person != null || place != null || year != null || image != null){ 
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 
