@@ -1,3 +1,4 @@
+
 var layer;
 var map;
 var options;
@@ -11,6 +12,9 @@ var year;
 var marker;
 var data;
     function initMap() {
+var div = L.DomUtil.create('div', 'info legend');
+div.innerHTML = '<select><option>1</option><option>2</option><option>3</option></select>';
+div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
 
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
@@ -62,11 +66,11 @@ var data;
     };
        
         function newMarkerMap(e){
-             lat = e.latlng.lat;
-             lng = e.latlng.lng;
+            lat = e.latlng.lat;
+            lng = e.latlng.lng;
             console.log(lat);
             console.log(lng);
-             person = prompt("Please enter your name:", "");
+            person = prompt("Please enter your name:", "");
             if (person != null){
               //  var place = prompt("Where did you took the pic ? ( no accent pls)", "");
                 //if (place != null){

@@ -18,8 +18,8 @@ res.render('index', { title: 'ejs' });};
 module.exports = router;
 
 / GET Hello World page. /
-router.get('/helloworld', function(req, res) {
-    res.render('helloworld', { title: 'Hello, World!' });
+router.get('/connection', function(req, res) {
+    res.render('connection', { title: 'Hello, World!' });
 });
 / GET Map page. /
 router.get('/index', function(req, res) {
@@ -124,3 +124,8 @@ router.post('/addcity', function(req, res) {
         }
     });
 });
+
+
+/* json webtoken
+jwt
+*/

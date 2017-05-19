@@ -11,15 +11,76 @@
 	    <script type="text/javascript" src="/js/bootbox.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
      	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+     	<link rel="stylesheet" type="text/css" href="/css/MarkerCluster.css">
+     	<link rel="stylesheet" type="text/css" href="/css/MarkerCluster.Default.css">
      	<link rel="stylesheet" type="text/css" href="/css/map.css">
-
+     	<script type="text/javascript" src="/js/leaflet.markercluster.js"></script>
+     	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+     
  	</head>
  	
- 	<body onload="initMap()">
-<div id="map" ></div>
-<input  type="image" id="addmarker" class="leaflet-control-zoom leaflet-bar leaflet-control" src="/img/add.png" alt="Add Marker" />
-<input  type="image" id="admin" class="leaflet-control-zoom leaflet-bar leaflet-control" src="/img/admin.png" alt="Admin page " />
-<input  type="image" id="about" class="leaflet-control-zoom leaflet-bar leaflet-control" src="/img/about.png" alt="Admin page " />
+<body onload="initMap()">
+	<div id="map" ></div>
+
+	
+	
+	
+	
+  
+  <div class="area"></div>
+		<nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                            Home 
+                        </span>
+                    </a>
+                  
+                </li>
+                 <li class="has-subnav">
+                    <a href="/connection">
+                       <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        <span class="nav-text">
+                            Log in
+                        </span>
+                    </a>
+                    
+                </li>
+                <li id="addmarker" class="has-subnav">
+                    <a href="#">
+                        <i  class="fa fa-map-marker"></i>
+                        <span class="nav-text">
+                            Add a pic  
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+               			<i class="fa fa-book" aria-hidden="true"></i>
+                        <span class="nav-text">
+                            About Bondi 
+                        </span>
+                    </a>
+                    
+                </li>
+                
+            <ul class="logout">
+                <li>
+                   <a href="#">
+                         <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span class="nav-text">
+                            Log out 
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
+  
+    
+
 
  	 </body>
 </html>

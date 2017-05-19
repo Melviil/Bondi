@@ -9,12 +9,7 @@
  	.post p{
  		font-family: cursive;
  	}
- 	#addmarker{
- 		position: absolute;
-    right: 0;
-    max-width: 75px;
-    top: 47%;
- 	}
+ 	
  	#admin{
  		position: absolute;
     right: 0;
