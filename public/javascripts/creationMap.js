@@ -11,10 +11,9 @@ var place;
 var year;
 var marker;
 var data;
+var lngpop;
+var latpop;
     function initMap() {
-var div = L.DomUtil.create('div', 'info legend');
-div.innerHTML = '<select><option>1</option><option>2</option><option>3</option></select>';
-div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
 
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
@@ -39,18 +38,19 @@ div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagat
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
-
-        map.on('zoomend', function () {
-    if (map.getZoom()<10) {
-         map.setMaxBounds([
-      [-60.000000, -110.000000],
-      [83.000000, 110.000000]
-    ]);
-         map.setZoom(2);
-
-    }
+        
     
-});
+       /* map.on('zoomend', function () {
+            
+       if ( map.getZoom()<2){
+var bounds2 = new L.LatLngBounds(
+            new L.LatLng(.000000, -110.000000),
+            new L.LatLng(83.000000, 110.000000));
+            map.fitBounds(bounds2);
+                 map.setZoom(2);
+        }
+            
+});*/
         // commentaire a enlever pour voir la map
          //layer = L.tileLayer('{z}/{x}/{y}.png', options).addTo(map);
           map.on('click', function(e){
@@ -141,6 +141,7 @@ div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagat
             if ( lat != null && lng != null && person != null && place != null && year != null && image != null){ 
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
+                
                 marker.addTo(map);
                 data = {
                     "person" : person,
@@ -175,7 +176,14 @@ function addMarkers(){
             ).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
-                    marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + " ," +data[i].place +"," + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
+                    if ( data[i].longitude >0 ){ // décale vers la gauche
+                       latpop = -100;
+                    }else{
+                        latpop = 100;
+                    }
+                    
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + " ," +data[i].place +"," + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                    marker.bindPopup().openPopup();
                     marker.addTo(map);
                 }
 
