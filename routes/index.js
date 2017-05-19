@@ -17,9 +17,13 @@ res.render('index', { title: 'ejs' });};
 
 module.exports = router;
 
-/ GET Hello World page. /
+/ GET connection page. /
 router.get('/connection', function(req, res) {
-    res.render('connection', { title: 'Hello, World!' });
+    res.render('connection', { title: 'connection' });
+});
+/ GET the about page. /
+router.get('/about', function(req, res) {
+    res.render('about', { title: 'about' });
 });
 / GET Map page. /
 router.get('/index', function(req, res) {
@@ -56,6 +60,7 @@ router.get('/markerlist', function(req, res) {
 router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
 });
+
 / POST to Add marker Service /
 router.post('/addmarker', function(req, res) {
     console.log("add a marker");

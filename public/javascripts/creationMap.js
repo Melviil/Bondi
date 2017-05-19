@@ -41,7 +41,7 @@ div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagat
         });
 
         map.on('zoomend', function () {
-    if (map.getZoom() < 2) {
+    if (map.getZoom()<10) {
          map.setMaxBounds([
       [-60.000000, -110.000000],
       [83.000000, 110.000000]
