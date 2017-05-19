@@ -12,8 +12,7 @@ var monk = require('monk');
 //var db = process.env.MONGOLAB_URI ||
   //process.env.MONGOHQ_URL ||
   //'localhost:27017/Bondi';
- 
-var db = monk('mongodb://admin:melvil@ds137121.mlab.com:37121/heroku_6pwg8vg8');
+ var db = monk('mongodb://admin:melvil@ds137121.mlab.com:37121/heroku_6pwg8vg8');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

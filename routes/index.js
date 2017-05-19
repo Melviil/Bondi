@@ -19,7 +19,7 @@ module.exports = router;
 
 / GET connection page. /
 router.get('/connection', function(req, res) {
-    res.render('connection', { title: 'connection' });
+    res.render('connection', { title: 'connection' }); 
 });
 / GET the about page. /
 router.get('/about', function(req, res) {
@@ -40,12 +40,10 @@ router.get('/index', function(req, res) {
 
 / GET Userlist page. /
 router.get('/userlist', function(req, res) {
-    var db = req.db;
+     var db = req.db;
     var collection = db.get('usercollection');
     collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
-        });
+        res.status(200).json(docs);
     });
 });
 / GET MarkerList page. /
@@ -56,6 +54,7 @@ router.get('/markerlist', function(req, res) {
         res.status(200).json(docs);
     });
 });
+
 / GET New User page. /
 router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
@@ -130,7 +129,3 @@ router.post('/addcity', function(req, res) {
     });
 });
 
-
-/* json webtoken
-jwt
-*/
