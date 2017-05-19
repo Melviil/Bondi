@@ -150,7 +150,7 @@ var data;
 
                     method: "POST",
                    //url: 'http://localhost:3000/addmarker',
-                   url: "http://bondi.herokuapp.com/addmarker",
+                   url: "https://bondi.herokuapp.com/addmarker",
                     data: data,
                     dataType: "json"
                      
