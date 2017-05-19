@@ -76,7 +76,7 @@ var bounds2 = new L.LatLngBounds(
                 //if (place != null){
                      year = prompt("When did you took the pic ?", "");
                     if (year != null){
-                         image = prompt("Send us the URL!");
+                        image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 //}
             }
@@ -95,7 +95,7 @@ var bounds2 = new L.LatLngBounds(
            
             if ( lat != null && lng != null && person != null && year != null && image != null){ 
                 marker = new L.marker(e.latlng, {icon : blueIcon});
-                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
+                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
                  data = {
                     "person" : person,
@@ -125,7 +125,7 @@ var bounds2 = new L.LatLngBounds(
                 if (place != null){
                     year = prompt("When did you took the pic ?", "");
                     if (year != null){
-                        image = prompt("Send us the URL!");
+                        image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 }
             }
@@ -140,7 +140,7 @@ var bounds2 = new L.LatLngBounds(
            });
             if ( lat != null && lng != null && person != null && place != null && year != null && image != null){ 
                 marker = new L.marker([lat,lng], {icon : blueIcon});
-                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + " ,"+ place + " ," + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
+                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 
                 marker.addTo(map);
                 data = {
@@ -182,7 +182,7 @@ function addMarkers(){
                         latpop = 100;
                     }
                     
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + " ," +data[i].place +"," + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
                     marker.bindPopup().openPopup();
                     marker.addTo(map);
                 }
