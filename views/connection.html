@@ -157,6 +157,7 @@ body, html {
 </style>
 <script>
 $( document ).ready(function() {
+    var data;
     // DOM ready
 
     // Test data
@@ -236,22 +237,16 @@ function checkPasswd() {
            
       var pseudo = document.getElementById("inputPseudo").value;
       var password = document.getElementById("inputPassword").value;
-      alert('pseudo');
-      alert('password');
-     $.ajax({
-            method: "GET",
-            url: "http://localhost:3000/userlist",
-            dataType: "json"}
-            ).done(function(data){
-                for ( var i in data){
-                    //if (data[i].pseudo == pseudo && data[i].password == password){
-                        alert(data[i].pseudo );
-                    //}
-                }
-
-            }).fail(function(err){
-                alert("Problem");
-            });
+     data = {
+                    "pseudo" : pseudo,
+                    "password" : password
+                };
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost:3000/checkuser",
+                    data: data,
+                     dataType: "json"
+                });
 }
 </script>
  	</head>
@@ -261,7 +256,7 @@ function checkPasswd() {
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form id ="connection" action ="/connection "class="form-signin" onsubmit="checkPasswd()">
+            <form id ="connection" action ="#" class="form-signin" onsubmit="checkPasswd()">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>

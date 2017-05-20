@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -97,6 +98,34 @@ router.post('/addmarker', function(req, res) {
             //res.redirect("userlist");
         }
     });
+});
+/ POST to Add marker Service /
+router.post('/checkuser', function(req, res) {
+    console.log("check user ");
+    // Set our database ( bondi here) 
+   
+    var db = req.db;
+    console.log(req.body);
+    // Get all the markers informations
+    var pse = req.body.pseudo;
+   var pas = req.body.password;
+    
+
+    // Set our collection
+    var collection = db.get('usercollection');
+
+    collection.find({ pseudo: pse },function(err, res){
+       if ( res[0].password == pas){
+        console.log(res);
+       
+       jwt.sign({ foo: 'bar' }, "ILoveHummusAndAnanas", { algorithm: 'RS256' }, function(err, token) {
+        console.log(token);
+    });
+       }
+        
+
+    });
+     
 });
 / POST to Add city Service /
 router.post('/addcity', function(req, res) {
