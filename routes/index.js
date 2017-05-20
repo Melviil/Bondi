@@ -26,10 +26,7 @@ router.get('/connection', function(req, res) {
 });
 / GET register page. /
 router.get('/register', function(req, res) {
-    jwt.verify(token, cert, { algorithms: ['RS256'] }, function(err, decoded) {
-              res.render('register', { title: 'register' }); 
-            });
-   
+    res.render('register', { title: 'register' }); 
 });
 / GET the about page. /
 router.get('/about', function(req, res) {
@@ -125,9 +122,10 @@ router.post('/checkuser', function(req, response) {
     console.log(pse);
     console.log(pas);
     collection.find({ pseudo: pse },function(err, result){
-
+        console.log("recherche");
         if (!result.length) {
-            response.sendStatus(400).send("Wrong pseudo");
+            console.log("no");
+            response.sendStatus(400); //mauvais pseudo
 
         } 
         var cipher = crypto.createCipher('aes-256-ctr',pas);
@@ -152,20 +150,18 @@ router.post('/checkuser', function(req, response) {
               pseudo: pse
             }, secretToken, { expiresIn: '1h' });
 
-           jwt.verify(token, secretToken, {
-              pseudo: pse
-            }, function(err, decoded) {
-              console.log(decoded);
-              console.log("true");
-            });
+          
 
             console.log(token);
-            response.sendStatus(200);
-            response.redirect("/");
+            response.status(200);
+            response.end({
+                status : "200"
+            }); // bien log
+            console.log("bien envoyé");
 
         }
         else{
-            response.sendStatus(400).send("Wrong password");
+            response.sendStatus(400); // mauvais pass
         }
     
      

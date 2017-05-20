@@ -13,6 +13,7 @@ var marker;
 var data;
 var lngpop;
 var latpop;
+var person;
     function initMap() {
 
         var bounds = new L.LatLngBounds(
@@ -71,11 +72,12 @@ var bounds2 = new L.LatLngBounds(
             console.log(lat);
             console.log(lng);
             person = prompt("Please enter your name:", "");
-            if (person != null){
+            if (person != ""){
+
               //  var place = prompt("Where did you took the pic ? ( no accent pls)", "");
                 //if (place != null){
                      year = prompt("When did you took the pic ?", "");
-                    if (year != null){
+                    if (year != ""){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 //}
@@ -93,7 +95,7 @@ var bounds2 = new L.LatLngBounds(
                 });
 
            
-            if ( lat != null || lng != null || person != null || year != null || image != null){ 
+            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
                 marker = new L.marker(e.latlng, {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 marker.addTo(map);
@@ -120,11 +122,11 @@ var bounds2 = new L.LatLngBounds(
         function newMarkerButton(e){
            
             person = prompt("Please enter your name:", "");
-            if (person != null){
+            if (person != ""){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
-                if (place != null){
+                if (place != ""){
                     year = prompt("When did you took the pic ?", "");
-                    if (year != null){
+                    if (year != ""){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 }
@@ -138,7 +140,7 @@ var bounds2 = new L.LatLngBounds(
                     lng = data.results[0].geometry.location.lng;
             
            });
-            if ( lat != null || lng != null || person != null || place != null || year != null || image != null){ 
+            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 
@@ -183,7 +185,6 @@ function addMarkers(){
                     }
                     
                         marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
-                    marker.bindPopup().openPopup();
                     marker.addTo(map);
                 }
 

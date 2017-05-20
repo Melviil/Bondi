@@ -8,16 +8,21 @@
      	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/googleform.css">
         <script type="text/javascript" src="/js/connection.js"></script>
-
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+ 
+ 
      	
  	</head>
  	
 	<body>
+        <a href="/">
+        <i id="goback" class="fa fa-arrow-circle-left fa-5x" aria-hidden="true"></i>
+    </a>
 		 <div class="container">
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form id ="connection" action ="#" class="form-signin" onsubmit="checkPasswd()">
+            <form id ="connection" class="form-signin"  novalidate>
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -26,7 +31,7 @@
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</input>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" onclick="checkPasswd()">Sign in</button>
             </form><!-- /form -->
            
         </div><!-- /card-container -->

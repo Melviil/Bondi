@@ -138,3 +138,12 @@ body, html {
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+ i#goback{
+        margin-top: 2%;
+    margin-left: 2%;
+        color: white;
+    }
+
+    a, a:hover{
+        color: inherit;
+    }
