@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var jwt = require('jsonwebtoken');
 
 //connection database local
 var mongo = require('mongodb');
@@ -19,7 +20,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-
+app.use(require('express-json-promise')());
 app.use(cors({credentials: true, origin: true}));
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));

@@ -7,9 +7,8 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
      	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/googleform.css">
-        <script type="text/javascript" src="/js/connection.js"></script>
-
-     	
+        <script type="text/javascript" src="/js/register.js"></script>
+       
  	</head>
  	
 	<body>
@@ -17,10 +16,12 @@
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form id ="connection" action ="#" class="form-signin" onsubmit="checkPasswd()">
+            <form id ="connection" action ="/register" class="form-signin" onsubmit="checkPassGood()">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
+                <input type="text" id="inputName" class="form-control" placeholder="Name " required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputCheckPassword" class="form-control" placeholder="Password" required>
                 <div id="remember" class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
