@@ -16,8 +16,14 @@ function checkPassGood() {
                 };
                 $.ajax({
                   statusCode: {
-                  400: function() {
-                    alert("Pseudo already used");
+
+                      400: function(response) {
+                    alert("Pseudo already taken");
+                  },
+
+                      200: function(response) {
+                    alert("Well registered");
+                    window.location = "/" ;
                   }
                 },
                     method: "POST",

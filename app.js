@@ -16,7 +16,7 @@ var monk = require('monk');
  var db = monk('mongodb://admin:melvil@ds137121.mlab.com:37121/heroku_6pwg8vg8');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -45,8 +45,8 @@ app.use(function(req,res,next){
 });
 
 app.use('/', index);
-app.use('/users', users);
-
+app.use('/admin', require('./routes/middleware/validateRequest.js'));
+app.use('/admin', admin);
 
 
 // Make our db accessible to our router

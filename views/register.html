@@ -20,7 +20,7 @@
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form id ="connection" action ="/register" class="form-signin" onsubmit="checkPassGood()">
+            
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
                 <input type="text" id="inputName" class="form-control" placeholder="Name " required autofocus>
@@ -31,8 +31,8 @@
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</input>
-            </form><!-- /form -->
+                  <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onclick="checkPassGood()">Register</input>
+           
            
         </div><!-- /card-container -->
     </div><!-- /container -->

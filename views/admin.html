@@ -9,45 +9,151 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 </head>
-<body>
+<script>
+function generate(){
+  buildHtmlTableMarkers('#marker');
+  buildHtmlTableUsers('#user');
+}
+function buildHtmlTableMarkers(selector) {
+$.ajax({
+            method: "GET",
+           url: "http://localhost:3000/markerlist",
+           //url: "https://bondi.herokuapp.com/markerlist",
+            dataType: "json"}
+            ).done(function(data){
+ var columns = addAllColumnHeaders(data, selector);
 
-<div class="container">
-  <h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>            
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-        <td><i class="fa fa-ban" aria-hidden="true"></i></td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-        <td><i class="fa fa-ban" aria-hidden="true"></i></td>
+  for (var i = 0; i < data.length; i++) {
+    var row$ = $('<tr/>');
+    for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+      var cellValue = data[i][columns[colIndex]];
+      if (cellValue == null) cellValue = "";
+      row$.append($('<td/>').html(cellValue));
+    }
+    $(selector).append(row$);
+  }
+  $("#nbmarker").text("There are " + data.length + " markers");
+            }).fail(function(err){
+                console.log(err);
+            });
+ 
+}
+function buildHtmlTableUsers(selector) {
+$.ajax({
+            method: "GET",
+           url: "http://localhost:3000/userlist",
+           //url: "https://bondi.herokuapp.com/userlist",
+            dataType: "json"}
+            ).done(function(data){
+ var columns = addAllColumnHeaders(data, selector);
 
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-        <td><i class="fa fa-ban" aria-hidden="true"></i></td>
+  for (var i = 0; i < data.length; i++) {
+    var row$ = $('<tr/>');
+    for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+      var cellValue = data[i][columns[colIndex]];
+      if (cellValue == null) cellValue = "";
+      row$.append($('<td/>').html(cellValue));
+    }
+    $(selector).append(row$);
+  }
+    $("#nbuser").text("There are " + data.length + " users");
 
-      </tr>
-    </tbody>
+            }).fail(function(err){
+                console.log(err);
+            });
+ 
+}
+
+// Adds a header row to the table and returns the set of columns.
+// Need to do union of keys from all records as some records may not contain
+// all records.
+function addAllColumnHeaders(data, selector) {
+  var columnSet = [];
+  var headerTr$ = $('<tr/>');
+
+  for (var i = 0; i < data.length; i++) {
+    var rowHash = data[i];
+    for (var key in rowHash) {
+      if ($.inArray(key, columnSet) == -1) {
+        columnSet.push(key);
+        headerTr$.append($('<th/>').html(key));
+      }
+    }
+    
+      }
+
+  $(selector).append(headerTr$);
+
+  return columnSet;
+}
+
+function destroyMarker(){
+ var supp = document.getElementById("deleteMarker");
+ console.log(supp.value);
+ confirm = prompt("sure to remove ? Yes to delete", "");
+            if (confirm == "yes"){
+              console.log("on supp");
+     data = {
+                        "id" : supp.value
+                    };
+                     $.ajax({
+
+                        method: "POST",
+                       url: 'http://localhost:3000/suppmarker',
+                       //url: "https://bondi.herokuapp.com/suppmarker",
+                        data: data,
+                        dataType: "json"
+                         
+                    });
+    }
+    window.setTimeout(function(){
+
+        // Move to a new location or you can do something else
+        window.location.href = "/admin";
+
+    }, 2000);
+}
+function destroyUserandMarkers(){
+ var supp = document.getElementById("deleteUser");
+ console.log(supp.value);
+ confirm = prompt("sure to remove ? Yes to delete", "");
+            if (confirm == "yes"){
+   data = {
+                      "id" : supp.value
+                  };
+                   $.ajax({
+
+                      method: "POST",
+                     url: 'http://localhost:3000/suppuser',
+                     //url: "https://bondi.herokuapp.com/addmarker",
+                      data: data,
+                      dataType: "json"
+                       
+                  });
+}
+window.setTimeout(function(){
+
+        // Move to a new location or you can do something else
+        window.location.href = "/admin";
+
+    }, 2000);
+}
+</script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<body onLoad="generate()">
+  <h1> Zone Admin aussi fort qu'Amin </h1>
+  <table id="marker" border="1">
+    <h1 id="nbmarker"> </h1>
+    <textarea id="deleteMarker" placeholder="Put the id to delete"></textarea>
+    <input type="button" value="Remove" id="deleteMarkerbutton" onclick="destroyMarker()" />
   </table>
-</div>
+  <table id="user" border="1">
+   <h1 id="nbuser"></h1>
+   <textarea id ="deleteUser" placeholder="Put the id to delete ( all the marker from this suer will be destroy)"></textarea>
+   <input type="button" value="remove" id="deleteUserbutton" onclick="destroyUserandMarkers()" />
 
+  </table>
 </body>
 </html>
 

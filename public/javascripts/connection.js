@@ -10,14 +10,22 @@ function checkPasswd() {
                     "password" : password
                 };
                 $.ajax({
+                    statusCode: {
+
+                      400: function(response) {
+                    alert("User/Password incorrect");
+                  },
+
+                      200: function(response) {
+                    alert("Bien log in");
+                    document.cookie = "token= "+response.token+"; path='/'";
+                    window.location = "/" ;
+                  }
+                },
+
                     method: "POST",
                     url: "http://localhost:3000/checkuser",
                     data: data,
-                     success :function(response){
-                        console.log("response succes");
-                     },
-                     error : function(response){
-                        console.log(response);
-                     }
+                     dataType: "json"
                 });
 }

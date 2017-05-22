@@ -13,6 +13,8 @@ var marker;
 var data;
 var lngpop;
 var latpop;
+var person;
+var citys;
     function initMap() {
 
         var bounds = new L.LatLngBounds(
@@ -39,7 +41,7 @@ var latpop;
             popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
         
-    
+    addMarkers();
        /* map.on('zoomend', function () {
             
        if ( map.getZoom()<2){
@@ -62,7 +64,7 @@ var bounds2 = new L.LatLngBounds(
             newMarkerButton(e);
             
         };
-        addMarkers();
+        getMarkers();
     };
        
         function newMarkerMap(e){
@@ -71,11 +73,12 @@ var bounds2 = new L.LatLngBounds(
             console.log(lat);
             console.log(lng);
             person = prompt("Please enter your name:", "");
-            if (person != null){
+            if (person != ""){
+
               //  var place = prompt("Where did you took the pic ? ( no accent pls)", "");
                 //if (place != null){
                      year = prompt("When did you took the pic ?", "");
-                    if (year != null){
+                    if (year != ""){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 //}
@@ -83,48 +86,37 @@ var bounds2 = new L.LatLngBounds(
              $.ajax({
                 async : false,
                 url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
-             
-                    console.log(data.results[1].address_components[0].long_name);
-                
+                    // si lat et lng inconnu
 
-                    place = data.results[1].address_components[0].long_name;
-                   
-            
+
+                for ( var i in data){
+                    if ( data[i].lat =lat && data[i].lng = lng ){ // décale vers la gauche
+                        place =  data[i].idplace;
+                    }else{
+                        place = data.results[1].address_components[0].long_name; 
+                       
+                    }
+
+                    
                 });
 
            
-            if ( lat != null || lng != null || person != null || year != null || image != null){ 
-                marker = new L.marker(e.latlng, {icon : blueIcon});
-                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
-                marker.addTo(map);
-                 data = {
-                    "person" : person,
-                    "place" : place,
-                    "year" : year,
-                    "latitude" : lat,
-                    "longitude" : lng,
-                    "url" : image
-                };
-                $.ajax({
-                    method: "POST",
-                    //url: 'http://localhost:3000/addmarker',
-                    url: "https://bondi.herokuapp.com/addmarker",
-                    data: data,
-                     dataType: "json"
-                });
-            }
-        };
+            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
+                addMarkerDdb(lat, lng, person, place, year, image);
+                
+            };
+        }
 
 
 
         function newMarkerButton(e){
            
             person = prompt("Please enter your name:", "");
-            if (person != null){
+            if (person != ""){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
-                if (place != null){
+                if (place != ""){
                     year = prompt("When did you took the pic ?", "");
-                    if (year != null){
+                    if (year != ""){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 }
@@ -136,9 +128,63 @@ var bounds2 = new L.LatLngBounds(
                
                     lat = data.results[0].geometry.location.lat;
                     lng = data.results[0].geometry.location.lng;
+                    
             
            });
-            if ( lat != null || lng != null || person != null || place != null || year != null || image != null){ 
+            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
+                 addMarkerDdb(lat, lng, person, place, year, image);
+                
+            }
+            //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
+            //console.log(res);
+
+   
+        };
+function addMarkers(){
+              //Fonction allant chercher les données de tous les markers
+        $.ajax({
+            method: "GET",
+           //url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
+            dataType: "json"}
+            ).done(function(data){
+                for ( var i in data){
+
+                    while ( data[i].place != )
+                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
+                    if ( data[i].longitude >0 ){ // décale vers la gauche
+                       latpop = -100;
+                    }else{
+                        latpop = 100;
+                    }
+                    
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                    marker.addTo(map);
+                }
+
+            }).fail(function(err){
+                console.log(err);
+            });
+
+           
+}
+function getCitys(){
+              //Fonction allant chercher les données de tous les markers
+        $.ajax({
+            method: "GET",
+           //url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/citylist",
+            dataType: "json"}
+            ).done(function(data){
+               citys = data;
+
+            }).fail(function(err){
+                console.log(err);
+            });
+
+           
+}
+function addMarkerDdb( lat,lng,person,place, year,image){
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
                 
@@ -160,38 +206,23 @@ var bounds2 = new L.LatLngBounds(
                     dataType: "json"
                      
                 });
-            }
-            //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
-            //console.log(res);
+}
+function addCityDdb( lat,lng,place){
+               
+                data = {
+                    "place" : place,
+                    "lat" : lat,
+                    "lng" : lng
+                };
+                 $.ajax({
 
-   
-        };
-function addMarkers(){
-              //Fonction allant chercher les données de tous les markers
-        $.ajax({
-            method: "GET",
-           //url: "http://localhost:3000/markerlist",
-           url: "https://bondi.herokuapp.com/markerlist",
-            dataType: "json"}
-            ).done(function(data){
-                for ( var i in data){
-                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
-                    if ( data[i].longitude >0 ){ // décale vers la gauche
-                       latpop = -100;
-                    }else{
-                        latpop = 100;
-                    }
-                    
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
-                    marker.bindPopup().openPopup();
-                    marker.addTo(map);
-                }
-
-            }).fail(function(err){
-                console.log(err);
-            });
-
-           
+                    method: "POST",
+                   //url: 'http://localhost:3000/addmarker',
+                   url: "https://bondi.herokuapp.com/addcity",
+                    data: data,
+                    dataType: "json"
+                     
+                });
 }
 
 

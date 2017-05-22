@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var crypto = require('crypto');
-var secret = 'ILoveHummusAndAnanas'; // mot de passe
-var secretToken = 'ILoveCharwarma'; // jwt
+var secret = require('../routes/private.js');
+var secretToken = require('../routes/privatetoken');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Bondi' });
@@ -15,6 +15,7 @@ router.get('/', function(req, res, next) {
         });
     });*/
 });
+
 exports.index = function(req, res){
 res.render('index', { title: 'ejs' });};
 
@@ -43,6 +44,7 @@ router.get('/index', function(req, res) {
         });
     });  
 });
+
 
 
 / GET Userlist page. /
@@ -105,6 +107,11 @@ router.post('/addmarker', function(req, res) {
         }
     });
 });
+/ GET New User page. /
+router.get('/newuser', function(req, res) {
+    res.render('newuser', { title: 'Add New User' });
+});
+
 / POST to Add marker Service /
 router.post('/checkuser', function(req, response) {
    
@@ -149,14 +156,14 @@ router.post('/checkuser', function(req, response) {
            var token = jwt.sign({
               pseudo: pse
             }, secretToken, { expiresIn: '1h' });
-
+           // windows session storage 
           
 
             console.log(token);
             response.status(200);
-            response.end({
-                status : "200"
-            }); // bien log
+            response.send({
+                token : token
+            });
             console.log("bien envoyé");
 
         }
@@ -190,6 +197,9 @@ router.post('/adduser', function(req, response) {
             var cipher = crypto.createCipher('aes-256-ctr',pas)
             var crypted = cipher.update(secret,'utf8','hex')
             crypted += cipher.final('hex');
+             var token = jwt.sign({
+              pseudo: pse
+            }, secretToken, { expiresIn: '1h' });
             /insertion /
             collection.insert({
             "pseudo" : pse,
@@ -202,38 +212,39 @@ router.post('/adduser', function(req, response) {
                 response.send("There was a problem adding the information to the database.");
             }
             else {
-                response.send(200);
-                response.redirect("/");
+                 var token = jwt.sign({
+              pseudo: pse
+            }, secretToken, { expiresIn: '1h' });
+                 console.log("YAAAA");
+           // windows session storage 
+                response.sendStatus(200);
+                
             }
         });
             }else{
                 console.log("utilsateur existe");
-                response.status(400).send("utilsiateur existe");
+                response.sendStatus(400);
             
             }
         });
      
 });
 
-/ POST to Add city Service /
-router.post('/addcity', function(req, res) {
-
+/ POST to supp marker /
+router.post('/suppmarker', function(req, res) {
+console.log("trouvé");
     // Set our database ( bondi here) 
     var db = req.db;
 
     // Get all the markers informations
-    var name = req.name;
-    var latitude = req.lat;
-    var longitude = req.lng;
+    var id = req.body.id;
   
     // Set our collection
     var collection = db.get('markercollection');
 
     // Submit the marker to the DB
-    collection.insert({
-        "pseudo" : pseudo,
-        "latitude" : latitude,
-        "longitude" : longitude
+    collection.remove({
+        "_id" : id
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -244,6 +255,39 @@ router.post('/addcity', function(req, res) {
             //res.redirect("userlist");
         }
     });
+});
+/ POST to supp user /
+router.post('/suppuser', function(req, res) {
+console.log("trouvé");
+    // Set our database ( bondi here) 
+    var db = req.db;
+    // Get all the markers informations
+    var id = req.body.id;
+  console.log(id);
+    // Set our collection
+    var usercollection = db.get('usercollection');
+    var markercollection = db.get('markercollection');
+
+      usercollection.find({ "_id": id },function(err, result){
+        console.log(result);
+        markercollection.remove({
+            "pseudo" : result[0].pseudo
+        });
+        }); 
+
+    
+   /* usercollection.remove({
+        "_id" : id
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            //TODO
+            //res.redirect("userlist");
+        }
+    });*/
 });
 
 
