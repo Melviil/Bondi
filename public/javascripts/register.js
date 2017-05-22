@@ -27,7 +27,7 @@ function checkPassGood() {
                   }
                 },
                     method: "POST",
-                    url: "http://localhost:3000/adduser",
+                    url: "https://bondi.herokuapp/adduser",
                     data: data,
                     
           });

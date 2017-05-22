@@ -22,5 +22,21 @@
     max-width: 75px;
     top: 58%;
  	}
+ 	.leaflet-left {
+    right: 0 !important;
+    margin-right: 30px !important;
+    left : inherit !important;
+}
+    .btn-group{
+    position: absolute;
+    top: 0;
+    right: 42%;
+    z-index: 1000;
+    }
+    button.btn.btn-secondary {
+    background-color: white;
+    color: grey;
+}
+
 
 }

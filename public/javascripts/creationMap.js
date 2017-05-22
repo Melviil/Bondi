@@ -14,16 +14,20 @@ var data;
 var lngpop;
 var latpop;
 var person;
+var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
 
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
             new L.LatLng(83.000000, 110.000000));
         map = L.map('map').fitBounds(bounds);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+       
+        L.tileLayer(urlmap).addTo(map);
+        
+        //  L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
         options = {
             minZoom: 0,
-            maxZoom: 4,
+            maxZoom: 0,
             opacity: 1.0,
             tms: false,
 
@@ -64,6 +68,18 @@ var bounds2 = new L.LatLngBounds(
             
         };
         addMarkers();
+        $( "#btn-original" ).click(function() {
+          urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
+          L.tileLayer(urlmap).addTo(map);
+        });
+        $( "#btn-bucolic" ).click(function() {
+          urlmap = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+          L.tileLayer(urlmap).addTo(map);
+        });
+        $( "#btn-bw" ).click(function() {
+          urlmap = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
+          L.tileLayer(urlmap).addTo(map);
+        });
     };
        
         function newMarkerMap(e){
@@ -72,12 +88,12 @@ var bounds2 = new L.LatLngBounds(
             console.log(lat);
             console.log(lng);
             person = prompt("Please enter your name:", "");
-            if (person != ""){
+            if (person != "" && person != null){
 
               //  var place = prompt("Where did you took the pic ? ( no accent pls)", "");
                 //if (place != null){
                      year = prompt("When did you took the pic ?", "");
-                    if (year != ""){
+                    if (year != "" && year != null){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 //}
@@ -95,7 +111,7 @@ var bounds2 = new L.LatLngBounds(
                 });
 
            
-            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
+            if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
                 addMarkerDdb(lat, lng, person, place, year, image);
             };
         }
@@ -105,11 +121,11 @@ var bounds2 = new L.LatLngBounds(
         function newMarkerButton(e){
            
             person = prompt("Please enter your name:", "");
-            if (person != ""){
+            if (person != "" && personne != null){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
-                if (place != ""){
+                if (place != "" && place != null ){
                     year = prompt("When did you took the pic ?", "");
-                    if (year != ""){
+                    if (year != "" && year != null){
                         image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
                     }
                 }
@@ -123,7 +139,7 @@ var bounds2 = new L.LatLngBounds(
                     lng = data.results[0].geometry.location.lng;
             
            });
-            if ( lat != null && lng != null && person != "" && place != "" && year != "" && image != ""){ 
+            if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
                  addMarkerDdb(lat, lng, person, place, year, image);
             }
             //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
