@@ -159,7 +159,6 @@ router.post('/checkuser', function(req, response) {
            // windows session storage 
           
 
-            console.log(token);
             response.status(200);
             response.send({
                 token : token
@@ -287,7 +286,20 @@ console.log("trouvé");
         }
     });
         }); 
-
-    
-   
+});
+/ find the pseudo in the token /
+router.post('/gettokenpseudo', function(req, response) {
+    // Set our database ( bondi here) 
+    var db = req.db;
+    // Get the decoded token
+    var decoded = jwt.decode(req.body.token, secretToken);
+    // Check if we have the pseudo
+    if ( decoded != null && decoded !=""){
+        response.status(200);
+        response.send({
+            pseudo : decoded.pseudo
+        });
+    }else{
+        response.status(400);
+    }
 });
