@@ -19,12 +19,14 @@ function checkPasswd() {
                       200: function(response) {
                     alert("Bien log in");
                     document.cookie = "token= "+response.token+"; path='/'";
+                    isLogged = true;
                     window.location = "/" ;
                   }
                 },
 
                     method: "POST",
-                    url: "https://bondi.herokuapp/checkuser",
+                    url: "http://localhost:3000/checkuser",
+                    //url: "https://bondi.herokuapp/checkuser",
                     data: data,
                      dataType: "json"
                 });

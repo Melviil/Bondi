@@ -51,12 +51,6 @@ app.use('/admin', admin);
 
 // Make our db accessible to our router
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -72,6 +66,13 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-
-
+app.all('*', function(req, res){
+  res.render('index', { title: 'Bondi' });
+});
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 

@@ -118,7 +118,7 @@ function destroyUserandMarkers(){
  console.log(supp.value);
  confirm = prompt("sure to remove ? Yes to delete", "");
             if (confirm == "yes"){
-   data = {
+                  data = {
                       "id" : supp.value
                   };
                    $.ajax({
@@ -143,6 +143,7 @@ window.setTimeout(function(){
 
 <body onLoad="generate()">
   <h1> Zone Admin aussi fort qu'Amin </h1>
+  <input type="button" value="Remove urls pb" id="deleteUrlPb" onclick="destroyUrlPb()" />
   <table id="marker" border="1">
     <h1 id="nbmarker"> </h1>
     <textarea id="deleteMarker" placeholder="Put the id to delete"></textarea>

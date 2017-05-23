@@ -14,6 +14,7 @@ var data;
 var lngpop;
 var latpop;
 var person;
+var isLogged = false;
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
 
@@ -21,17 +22,17 @@ var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
             new L.LatLng(-60.000000, -110.000000),
             new L.LatLng(83.000000, 110.000000));
         map = L.map('map').fitBounds(bounds);
-       
-        L.tileLayer(urlmap).addTo(map);
-        
-        //  L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
-        options = {
-            minZoom: 0,
-            maxZoom: 0,
+         options = {
+            minZoom: 2,
+            maxZoom: 22,
             opacity: 1.0,
             tms: false,
 
         };
+        L.tileLayer(urlmap, options).addTo(map);
+        
+        //  L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
+      
         blueIcon = L.icon({
             className:'blueIcon',
             iconUrl: '/img/map-marker-icon.png',
@@ -45,11 +46,11 @@ var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
         });
         
     addMarkers();
-       /* map.on('zoomend', function () {
+        /*map.on('zoomend', function () {
             
        if ( map.getZoom()<2){
 var bounds2 = new L.LatLngBounds(
-            new L.LatLng(.000000, -110.000000),
+            new L.LatLng(60.000000, -110.000000),
             new L.LatLng(83.000000, 110.000000));
             map.fitBounds(bounds2);
                  map.setZoom(2);
@@ -70,17 +71,18 @@ var bounds2 = new L.LatLngBounds(
         addMarkers();
         $( "#btn-original" ).click(function() {
           urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
-          L.tileLayer(urlmap).addTo(map);
+          L.tileLayer(urlmap, options).addTo(map);
         });
         $( "#btn-bucolic" ).click(function() {
           urlmap = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-          L.tileLayer(urlmap).addTo(map);
+          L.tileLayer(urlmap, options).addTo(map);
         });
         $( "#btn-bw" ).click(function() {
           urlmap = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
-          L.tileLayer(urlmap).addTo(map);
+          L.tileLayer(urlmap, options).addTo(map);
         });
     };
+
        
         function newMarkerMap(e){
             lat = e.latlng.lat;
@@ -101,18 +103,26 @@ var bounds2 = new L.LatLngBounds(
              $.ajax({
                 async : false,
                 url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
-             
-                    console.log(data.results[1].address_components[0].long_name);
-                
-
-                    place = data.results[1].address_components[0].long_name;
+             console.log(data.results[1]);
+                    if(typeof data.results[1] === 'undefined'){
+                       place="";
+                    }else{
+                        console.log("not un");
+                       place = data.results[1].address_components[0].long_name; 
+                    }
+                    
+                    
                    
             
                 });
 
            
-            if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
-                addMarkerDdb(lat, lng, person, place, year, image);
+            if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){ 
+                if (checkIfUrlValid(image)){
+                    addMarkerDdb(lat, lng, person, place, year, image);
+                }else{
+                    alert("The url is not an image");
+                }     
             };
         }
 
@@ -121,7 +131,7 @@ var bounds2 = new L.LatLngBounds(
         function newMarkerButton(e){
            
             person = prompt("Please enter your name:", "");
-            if (person != "" && personne != null){
+            if (person != "" && person != null){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
                 if (place != "" && place != null ){
                     year = prompt("When did you took the pic ?", "");
@@ -140,7 +150,11 @@ var bounds2 = new L.LatLngBounds(
             
            });
             if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
-                 addMarkerDdb(lat, lng, person, place, year, image);
+                if (checkIfUrlValid(image)){
+                    addMarkerDdb(lat, lng, person, place, year, image);
+                }else{
+                    alert("The url is not an image");
+                } 
             }
             //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
             //console.log(res);
@@ -162,8 +176,12 @@ function addMarkers(){
                     }else{
                         latpop = 100;
                     }
-                    
+                    if (data[i].place == ""){ // on ne met pas la ville
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                    }else{
                         marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+
+                    }
                     marker.addTo(map);
                 }
 
@@ -175,8 +193,12 @@ function addMarkers(){
 }
 function addMarkerDdb( lat,lng,person,place, year,image){
                 marker = new L.marker([lat,lng], {icon : blueIcon});
-                marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", "+ place + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] });
-                
+                if (data[i].place == ""){ // on ne met pas la ville
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                    }else{
+                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+
+                    }
                 marker.addTo(map);
                 data = {
                     "person" : person,
@@ -214,5 +236,9 @@ function addCityDdb( lat,lng,place){
                 });
 }
 
+function checkIfUrlValid(image){
 
+
+     return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
    

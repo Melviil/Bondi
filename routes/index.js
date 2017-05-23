@@ -264,19 +264,17 @@ console.log("trouvé");
     // Get all the markers informations
     var id = req.body.id;
   console.log(id);
+  console.log("on va supp");
     // Set our collection
     var usercollection = db.get('usercollection');
     var markercollection = db.get('markercollection');
 
       usercollection.find({ "_id": id },function(err, result){
-        console.log(result);
+        console.log(result[0].pseudo);
         markercollection.remove({
             "pseudo" : result[0].pseudo
         });
-        }); 
-
-    
-   /* usercollection.remove({
+        usercollection.remove({
         "_id" : id
     }, function (err, doc) {
         if (err) {
@@ -287,10 +285,9 @@ console.log("trouvé");
             //TODO
             //res.redirect("userlist");
         }
-    });*/
+    });
+        }); 
+
+    
+   
 });
-
-
-           
-          
-  
