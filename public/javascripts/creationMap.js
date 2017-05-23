@@ -187,15 +187,11 @@ function addMarkers(){
             ).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
-                    if ( data[i].longitude >0 ){ // décale vers la gauche
-                       latpop = -100;
-                    }else{
-                        latpop = 100;
-                    }
+                   
                     if (data[i].place == ""){ // on ne met pas la ville
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
                     }else{
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input type=\"image\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
 
                     }
                     marker.addTo(map);
@@ -210,9 +206,9 @@ function addMarkers(){
 function addMarkerDdb( lat,lng,person,place, year,image){
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 if (place == ""){ // on ne met pas la ville
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image+ "> </br> <p>" + person + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + image+ "> </br> <p>" + person + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] }).openPopup();
                     }else{
-                        marker.bindTooltip("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", " +place +", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [latpop, -100] }).openTooltip();
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + image + "> </br> <p>" + person + ", " +place +", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] }).openPopup();
 
                     }
                 marker.addTo(map);

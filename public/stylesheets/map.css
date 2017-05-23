@@ -37,6 +37,9 @@
     background-color: white;
     color: grey;
 }
+.leaflet-popup-content {
+    width: inherit !important;
+}
 
 
 }
