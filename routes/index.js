@@ -122,9 +122,11 @@ router.post('/checkuser', function(req, response) {
     // Get all the markers informations
     var pse = req.body.pseudo;
    var pas = req.body.password;
+   var pascheck = req.body.passwordcheck; // pour plus de sécurité
     
 
     // Set our collection
+    if ( pas == pascheck){
     var collection = db.get('usercollection');
     console.log(pse);
     console.log(pas);
@@ -169,9 +171,13 @@ router.post('/checkuser', function(req, response) {
         else{
             response.sendStatus(400); // mauvais pass
         }
+    });
+}else{
+        response.sendStatus(400); // mauvais pass
+    }
     
      
-});
+
 });
 
 / POST to Add marker Service /

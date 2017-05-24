@@ -11,7 +11,8 @@ function checkPassGood() {
         data = {
                     "pseudo" : pseudo,
                     "name" : name,
-                    "password" : password
+                    "password" : password,
+                    "passwordcheck" : passwordcheck
                      
                 };
                 $.ajax({

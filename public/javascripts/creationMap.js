@@ -18,6 +18,7 @@ var pseudoUser;
 var isLogged = false;
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
+   
         console.log(document.cookie);
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
@@ -89,6 +90,7 @@ var bounds2 = new L.LatLngBounds(
         }else{
             $("logout").hide();
         }
+      
     };
 
        
@@ -187,13 +189,12 @@ function addMarkers(){
             ).done(function(data){
                 for ( var i in data){
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
-                   
                     if (data[i].place == ""){ // on ne met pas la ville
                         marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
                
                     }else{
 
-                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input class=\"like\" type=\"image\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
 
                     }
                     marker.addTo(map);
@@ -284,4 +285,14 @@ data = {
 
     return pseudo;
 }
-   
+function addLike(oidimage){
+console.log(oidimage);
+if(pseudoUser != ""){
+console.log(pseudoUser);
+}else{
+    alert("You need to be connectec to like pics.");
+}
+
+}
+
+  
