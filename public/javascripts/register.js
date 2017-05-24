@@ -12,7 +12,7 @@ function checkPassGood() {
                     "pseudo" : pseudo,
                     "name" : name,
                     "password" : password,
-                    "passwordcheck" : passwordcheck
+                    "passwordcheck" : passwordCheck
                      
                 };
                 $.ajax({
@@ -28,8 +28,8 @@ function checkPassGood() {
                   }
                 },
                     method: "POST",
-                    //url: "https://bondi.herokuapp/adduser",
-                    url: "http://localhost:3000/adduser",
+                    url: "https://bondi.herokuapp/adduser",
+                    //url: "http://localhost:3000/adduser",
                     data: data,
                     
           });
