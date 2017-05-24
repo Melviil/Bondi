@@ -277,8 +277,8 @@ data = {
           },
 
           method: "POST",
-          url: "http://localhost:3000/gettokenpseudo",
-            //url: "https://bondi.herokuapp/checkuser",
+          //url: "http://localhost:3000/gettokenpseudo",
+        url: "https://bondi.herokuapp/checkuser",
             data: data,
             dataType: "json"
           });
