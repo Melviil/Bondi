@@ -190,8 +190,10 @@ function addMarkers(){
                    
                     if (data[i].place == ""){ // on ne met pas la ville
                         marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+               
                     }else{
-                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input type=\"image\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+
+                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input class=\"like\" type=\"image\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
 
                     }
                     marker.addTo(map);

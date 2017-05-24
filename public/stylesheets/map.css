@@ -40,6 +40,10 @@
 .leaflet-popup-content {
     width: inherit !important;
 }
+.like{
+    float: right;
+    margin-top: -10%;
+}
 
 
 }
