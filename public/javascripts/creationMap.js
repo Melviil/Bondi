@@ -287,7 +287,7 @@ data = {
 }
 function addLike(oidimage){
 console.log(oidimage);
-if(pseudoUser != ""){
+if(pseudoUser != undefined){
 console.log(pseudoUser);
 }else{
     alert("You need to be connectec to like pics.");
