@@ -16,6 +16,7 @@ var latpop;
 var person;
 var pseudoUser;
 var isLogged = false;
+ var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
    
@@ -46,6 +47,7 @@ var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
+        addLikes();
     addMarkers();
     
         /*map.on('zoomend', function () {
@@ -90,6 +92,8 @@ var bounds2 = new L.LatLngBounds(
         }else{
             $("logout").hide();
         }
+        console.log("MON PSEUDO");
+        console.log(pseudoUser);
         $( "#logout" ).click(function() {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';  
             window.location.replace("/");
@@ -192,7 +196,8 @@ function addMarkers(){
             dataType: "json"}
             ).done(function(data){
                 for ( var i in data){
-                    if (data[i].nblike == 0){
+                    console.log(imagesliker);
+                   if($.inArray(data[i]._id, imagesliker) == -1){
                         urllike = "like.png";
                     }else{
                         urllike = "likered.png";
@@ -252,8 +257,7 @@ function checkIfUrlValid(image){
 // on sait qu'il a un cookie, on va récupérer son pseudo
 function getPseudoIfConnected(cookie){
     var pseudo;
-    console.log('cookie envoyée');
-    console.log(cookie);
+    
 data = {
    "token" : cookie,
   };
@@ -272,7 +276,7 @@ data = {
 
           method: "POST",
           //url: "http://localhost:3000/gettokenpseudo",
-            url: "https://bondi.herokuapp.com/gettokenpseudo",
+          url: "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
@@ -305,7 +309,6 @@ if(typeof pseudoUser === 'undefined'){
               alert('500 status code! server error');
             },
             200: function(){
-                alert('On va ajouter le like mamene');
                 var data2 = {
        "oidimage" : oidmarker,
              };
@@ -333,3 +336,26 @@ if(typeof pseudoUser === 'undefined'){
     }
 }
 
+function addLikes(){
+    $.ajax({
+              method: "GET",
+              url: "http://localhost:3000/listlikes",
+            //url: "https://bondi.herokuapp/addlike",
+                data: data,
+                dataType: "json"})
+              .done(function(data){
+                for ( var i in data){
+                    if(data[i].pseudo == pseudoUser){
+                        console.log(data[i].idmarker);
+                        imagesliker.push(data[i].idmarker);
+                            console.log(imagesliker.length);
+                    }else{
+                         
+                    }
+                }
+
+            }).fail(function(err){
+                console.log(err);
+            });
+        
+}
