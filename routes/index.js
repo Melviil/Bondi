@@ -279,7 +279,7 @@ router.delete('/supplikesbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    });
+    };
             
    
 });
@@ -304,7 +304,7 @@ router.delete('/suppmarkersbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    });
+    };
             
    
 });
@@ -328,7 +328,7 @@ router.delete('/suppuserbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    });
+    };
             
    
 });
@@ -352,7 +352,7 @@ router.delete('/supplikesbyidmarker', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    });
+    };
             
    
 });
@@ -376,50 +376,10 @@ router.delete('/suppmarkerbyidmarker', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    });
+    };
             
    
 });
-/ POST to supp user /
-router.delete('/suppuser', function(req, res) {
-console.log("trouvé");
-    // Set our database ( bondi here) 
-    var db = req.db;
-    // Get all the markers informations
-    var id = req.body.id;
-  console.log(id);
-  console.log("on va supp");
-
-    // Set our collection
-    var usercollection = db.get('usercollection');
-    var markercollection = db.get('markercollection');
-
-      usercollection.find({ "_id": id },function(err, result){
-        console.log(result[0].pseudo);
-         markercollection.find({ "pseudo" : result[0].pseudo },function(err, resultmark){
-            console.log(resultmark[0]._id);
-            likecollection.remove({"idmarker" : resultmark[0]._id});
-            
-    });
-         });
-        markercollection.remove({
-            "pseudo" : result[0].pseudo
-        });
-
-        usercollection.remove({
-        "_id" : id
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            
-            //res.redirect("userlist");
-        }
-    });
-        }); 
-
 
 / find the pseudo in the token /
 router.post('/gettokenpseudo', function(req, response) {
@@ -433,7 +393,7 @@ router.post('/gettokenpseudo', function(req, response) {
     // Check if we have the pseudo
     if ( decoded.pseudo !=""){
         response.status(200);
-        return response.send({pseudo : decoded.pseudo});
+        response.send({pseudo : decoded.pseudo});
     }else{
         response.sendStatus(400);
     }

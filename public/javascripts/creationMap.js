@@ -309,7 +309,7 @@ if(typeof pseudoUser === 'undefined'){
              
         $.ajax({
               type: "PUT",
-             // url: "http://localhost:3000/addlike",
+            //  url: "http://localhost:3000/addlike",
             url: "https://bondi.herokuapp.com/addlike",
                 data: data,
                 dataType: "json",
@@ -353,7 +353,8 @@ function addLikes(){
   console.log("hey im in addlikes");
     $.ajax({
               method:"GET",
-             //url: "http://localhost:3000/listlikes",
+             
+            // url: "http://localhost:3000/listlikes",
             url: "https://bondi.herokuapp.com/listlikes",
                 data: data,
                 dataType: "json"})
