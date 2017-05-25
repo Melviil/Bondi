@@ -20,8 +20,9 @@ var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
-   
+        if ( document.cookie != ""){
          getPseudoIfConnected();
+       }
          console.log("LAAAAA");
          console.log(pseudoUser);
         if (document.cookie != ""){
@@ -270,7 +271,7 @@ function getPseudoIfConnected(){
           },
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
-            alert('200');
+            
 
           
            pseudoUser =response.pseudo;
