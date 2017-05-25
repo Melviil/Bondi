@@ -314,8 +314,8 @@ if(typeof pseudoUser === 'undefined'){
              };
         $.ajax({
               type: "PUT",
-            url: "http://localhost:3000/updatelikemarker",
-            //url: "https://bondi.herokuapp.com/updatelikemarker",
+            //url: "http://localhost:3000/updatelikemarker",
+            url: "https://bondi.herokuapp.com/updatelikemarker",
                 data: data2,
                 dataType: "json",
               

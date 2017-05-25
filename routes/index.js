@@ -241,10 +241,10 @@ console.log("trouvé");
     var id = req.body.id;
   
     // Set our collection
-    var collection = db.get('markercollection');
-
+    var markercollection = db.get('markercollection');
+    var likecollectioncollection = db.get('likecollection');
     // Submit the marker to the DB
-    collection.remove({
+    markercollection.remove({
         "_id" : id
     }, function (err, doc) {
         if (err) {
@@ -252,10 +252,11 @@ console.log("trouvé");
             res.send("There was a problem adding the information to the database.");
         }
         else {
-            //TODO
-            //res.redirect("userlist");
+            res.sendStatus(200);
+            likecollection.remove({"idmarker" : id});
         }
     });
+    
 });
 / POST to supp user /
 router.delete('/suppuser', function(req, res) {
@@ -272,9 +273,13 @@ console.log("trouvé");
 
       usercollection.find({ "_id": id },function(err, result){
         console.log(result[0].pseudo);
+         markercollection.find({ "pseudo" : result[0].pseudo },function(err, resultmark){
+            likecollection.remove({"idmarker" : resultmark[0]._id});
+         });
         markercollection.remove({
             "pseudo" : result[0].pseudo
         });
+
         usercollection.remove({
         "_id" : id
     }, function (err, doc) {
