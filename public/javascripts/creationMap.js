@@ -21,8 +21,7 @@ var isLogged = false;
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
         
-         getPseudoIfConnected();
-       
+         getPseudoWithCookie();
          console.log("LAAAAA");
          console.log(pseudoUser);
         if (document.cookie != ""){
@@ -260,7 +259,7 @@ function checkIfUrlValid(image){
      return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 // on sait qu'il a un cookie, on va récupérer son pseudo
-function getPseudoIfConnected(){
+function getPseudoWithCookie(){
     
 
     $.ajax({
@@ -282,7 +281,7 @@ function getPseudoIfConnected(){
 
           method: "POST",
         //url: "http://localhost:3000/gettokenpseudo",
-          url : "https://bondi.herokuapp.com/gettokenpseudo",
+         url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
@@ -294,7 +293,7 @@ function addLike(oidmarker){
   console.log("Avant like");
 
 
-if(pseudoUser == ''){
+if(typeof pseudoUser == 'undefined'){
     alert("You need to be connectec to like pics.");
 }else{
 
