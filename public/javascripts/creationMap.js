@@ -15,11 +15,21 @@ var lngpop;
 var latpop;
 var person;
 var pseudoUser;
+var pseudo;
 var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
    
+         getPseudoIfConnected();
+         console.log("LAAAAA");
+         console.log(pseudoUser);
+        if (document.cookie != ""){
+         $("#login").hide();
+         $("#register").hide();
+        }else{
+            $("logout").hide();
+        }
         console.log(document.cookie);
         var bounds = new L.LatLngBounds(
             new L.LatLng(-60.000000, -110.000000),
@@ -85,13 +95,7 @@ var bounds2 = new L.LatLngBounds(
           urlmap = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
           L.tileLayer(urlmap, options).addTo(map);
         });
-        if (document.cookie != ""){
-         pseudoUser = getPseudoIfConnected(); // l'utilisateur a un cookie
-         $("#login").hide();
-         $("#register").hide();
-        }else{
-            $("logout").hide();
-        }
+       
         console.log("MON PSEUDO");
         console.log(pseudoUser);
         $( "#logout" ).click(function() {
@@ -151,7 +155,7 @@ var bounds2 = new L.LatLngBounds(
 
 
         function newMarkerButton(e){
-           
+           console.log(pseudoUser);
             if (pseudoUser != ""){ // la personne est connecté
                 person = pseudoUser;
             }else{
@@ -256,31 +260,33 @@ function checkIfUrlValid(image){
 }
 // on sait qu'il a un cookie, on va récupérer son pseudo
 function getPseudoIfConnected(){
-    var pseudo;
+    
 
     $.ajax({
-        async : false,
+      async:false,
         statusCode: {
-
           400: function(response) {
             alert("Veuillez vous reconnectez");
           },
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
             alert('200');
-            console.log("response");
+
           
-           pseudo =response.pseudo;
+           pseudoUser =response.pseudo;
+           
+
             }
           },
 
           method: "POST",
-          //url: "http://localhost:3000/gettokenpseudo",
-          url: "https://bondi.herokuapp.com/gettokenpseudo",
+        //url: "http://localhost:3000/gettokenpseudo",
+          url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
-    return pseudo;
+    
+    
 }
 function addLike(oidmarker){
 if(typeof pseudoUser === 'undefined'){

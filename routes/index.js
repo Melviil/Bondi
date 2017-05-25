@@ -433,7 +433,6 @@ router.post('/gettokenpseudo', function(req, response) {
     if ( decoded.pseudo !=""){
         response.status(200);
         response.send({pseudo : decoded.pseudo});
-        
     }else{
         response.sendStatus(400);
     }
