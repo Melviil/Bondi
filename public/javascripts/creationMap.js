@@ -257,7 +257,7 @@ function checkIfUrlValid(image){
 // on sait qu'il a un cookie, on va récupérer son pseudo
 function getPseudoIfConnected(cookie){
     var pseudo;
-    
+    alert(cookie);
 data = {
    "token" : cookie,
   };
@@ -270,7 +270,9 @@ data = {
           },
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
+            alert('200');
             pseudo = response.pseudo;
+            alert(pseudo);
             }
           },
 
