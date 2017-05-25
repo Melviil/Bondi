@@ -422,23 +422,18 @@ console.log("trouvé");
 
 / find the pseudo in the token /
 router.post('/gettokenpseudo', function(req, response) {
-    console.log("token");console.log("token");console.log("token");console.log("token");console.log("token");
-    console.log(req.body.token);
 
     // Set our database ( bondi here) 
     var db = req.db;
     // Get the decoded token
-    console.log(req.cookies.token);
     var decoded = jwt.decode(req.cookies.token, secretToken);
     console.log(decoded);
     // Check if we have the pseudo
     if ( decoded != null && decoded !=""){
-        response.status(200);
-        response.send({
-            pseudo : decoded.pseudo
-        });
+        response.status(200).send({pseudo : decoded.pseudo});
+        
     }else{
-        response.status(400);
+        response.sendStatus(400);
     }
 });
 /Ajout d'un like dans la DDB/

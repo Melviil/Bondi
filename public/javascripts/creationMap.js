@@ -86,7 +86,7 @@ var bounds2 = new L.LatLngBounds(
           L.tileLayer(urlmap, options).addTo(map);
         });
         if (document.cookie != ""){
-         pseudoUser = getPseudoIfConnected(document.cookie); // l'utilisateur a un cookie
+         pseudoUser = getPseudoIfConnected(); // l'utilisateur a un cookie
          $("#login").hide();
          $("#register").hide();
         }else{
@@ -255,12 +255,9 @@ function checkIfUrlValid(image){
      return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 // on sait qu'il a un cookie, on va récupérer son pseudo
-function getPseudoIfConnected(cookie){
+function getPseudoIfConnected(){
     var pseudo;
-    alert(cookie);
-data = {
-   "token" : cookie,
-  };
+
     $.ajax({
         async : false,
         statusCode: {
@@ -271,6 +268,7 @@ data = {
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
             alert('200');
+            alert(response);
             pseudo = response.pseudo;
             alert(pseudo);
             }
