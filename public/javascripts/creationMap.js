@@ -282,8 +282,8 @@ var pseudo;
           },
 
           method: "POST",
-        url: "http://localhost:3000/gettokenpseudo",
-       // url : "https://bondi.herokuapp.com/gettokenpseudo",
+       // url: "http://localhost:3000/gettokenpseudo",
+       url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
