@@ -172,11 +172,11 @@ var bounds2 = new L.LatLngBounds(
             
            });
             if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
-                if (checkIfUrlValid(image)){
+              //  if (checkIfUrlValid(image)){
                     addMarkerDdb(lat, lng, person, place, year, image);
-                }else{
-                    alert("The url is not an image");
-                } 
+               // }else{
+                 //   alert("The url is not an image");
+                /} 
             }
             //var res.json({"person": person, "place" : place, "year":year, "latitude":latitude, "longitude":longitude, "url":image});
             //console.log(res);
