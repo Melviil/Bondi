@@ -268,9 +268,9 @@ function getPseudoIfConnected(){
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
             alert('200');
-            alert(response);
-            pseudo = response.pseudo;
-            alert(pseudo);
+            console.log("response");
+          
+           pseudo =response.pseudo;
             }
           },
 

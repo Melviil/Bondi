@@ -427,10 +427,12 @@ router.post('/gettokenpseudo', function(req, response) {
     var db = req.db;
     // Get the decoded token
     var decoded = jwt.decode(req.cookies.token, secretToken);
-    console.log(decoded);
+    console.log("DECODEEEEEEEED");
+    console.log(decoded.pseudo);
     // Check if we have the pseudo
-    if ( decoded != null && decoded !=""){
-        response.status(200).send({pseudo : decoded.pseudo});
+    if ( decoded.pseudo !=""){
+        response.status(200);
+        response.send({pseudo : decoded.pseudo});
         
     }else{
         response.sendStatus(400);
