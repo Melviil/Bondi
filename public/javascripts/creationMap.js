@@ -20,8 +20,8 @@ var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
+        getPseudoWithCookie();
         
-         pseudoUser = getPseudoWithCookie();
          console.log("LAAAAA");
          console.log(pseudoUser);
         if (document.cookie != ""){
@@ -156,7 +156,6 @@ var bounds2 = new L.LatLngBounds(
 
 
         function newMarkerButton(e){
-           pseudoUser = getPseudoWithCookie();
            console.log(pseudoUser);
             if (pseudoUser != ""){ // la personne est connecté
                 person = pseudoUser;
@@ -194,7 +193,6 @@ var bounds2 = new L.LatLngBounds(
    
         };
 function addMarkers(){
-   pseudoUser = getPseudoWithCookie();
               //Fonction allant chercher les données de tous les markers et le ajoutant sur la map
         $.ajax({
             method: "GET",
@@ -227,7 +225,6 @@ function addMarkers(){
            
 }
 function addMarkerDdb( lat,lng,person,place, year,image){
-   pseudoUser = getPseudoWithCookie();
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 if (place == ""){ // on ne met pas la ville
                         marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + image+ "> </br> <p>" + person + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] }).openPopup();
@@ -263,8 +260,7 @@ function checkIfUrlValid(image){
      return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 function getPseudoWithCookie(){
-    console.log("DEBUT DE FCT");
-    console.log(pseudoUser);
+   
 var pseudo;
     $.ajax({
       async:false,
@@ -275,28 +271,24 @@ var pseudo;
           },
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
-            
-
-          
-           pseudo =response.pseudo;
-           console.log("MILIEU FCT");
-           console.log(pseudo);
-          console.log(response.pseudo);
-            }
+         
+          pseudoUser = response.pseudo;
+            },
+            500: function(response) { // si on connait l'utilisateur alors on lui donne un Token
+          console.log(response);
+          }
           },
 
           method: "POST",
-       // url: "http://localhost:3000/gettokenpseudo",
+      //  url: "http://localhost:3000/gettokenpseudo",
        url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
-    console.log("FIN DE FCT");
-    console.log(pseudo);
-    return pseudo;
+   
+    
 }
 function addLike(oidmarker){
-   pseudoUser = getPseudoWithCookie();
   console.log(pseudoUser);
   console.log("Avant like");
 

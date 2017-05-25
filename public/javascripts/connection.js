@@ -19,7 +19,7 @@ function checkPasswd() {
       200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
       alert("Bien log in");
       document.cookie = "token="+response.token+"; path='/'";
-      //document.cookie = response.token;
+      
       isLogged = true;
       console.log(response.pseudo);
       window.location = "/" ;
