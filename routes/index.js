@@ -279,7 +279,7 @@ router.delete('/supplikesbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    };
+    });
             
    
 });
@@ -304,7 +304,7 @@ router.delete('/suppmarkersbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    };
+    });
             
    
 });
@@ -328,7 +328,7 @@ router.delete('/suppuserbypseudo', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    };
+    });
             
    
 });
@@ -352,7 +352,7 @@ router.delete('/supplikesbyidmarker', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    };
+    });
             
    
 });
@@ -376,7 +376,7 @@ router.delete('/suppmarkerbyidmarker', function(req, res) {
             res.sendStatus(200);
             //res.redirect("userlist");
         }
-    };
+    });
             
    
 });
