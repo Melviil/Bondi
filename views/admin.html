@@ -98,7 +98,7 @@ function destroyMarker(){
                     };
                      $.ajax({
 
-                        method: "POST",
+                        type: "DELETE",
                        //url: 'http://localhost:3000/suppmarker',
                        url: "https://bondi.herokuapp.com/suppmarker",
                         data: data,
@@ -123,9 +123,9 @@ function destroyUserandMarkers(){
                   };
                    $.ajax({
 
-                      method: "POST",
+                      type: "DELETE",
                      //url: 'http://localhost:3000/suppuser',
-                     url: "https://bondi.herokuapp.com/addmarker",
+                     url: "https://bondi.herokuapp.com/suppuser",
                       data: data,
                       dataType: "json"
                        

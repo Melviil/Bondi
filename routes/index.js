@@ -70,7 +70,7 @@ router.get('/newuser', function(req, res) {
 });
 
 / POST to Add marker Service /
-router.post('/addmarker', function(req, res) {
+router.put('/addmarker', function(req, res) {
     console.log("add a marker");
     // Set our database ( bondi here) 
    
@@ -109,12 +109,8 @@ router.post('/addmarker', function(req, res) {
         }
     });
 });
-/ GET New User page. /
-router.get('/newuser', function(req, res) {
-    res.render('newuser', { title: 'Add New User' });
-});
 
-/ POST to Add marker Service /
+/ POST to check if a user exists/
 router.post('/checkuser', function(req, response) {
    
     // Set our database ( bondi here) 
@@ -180,8 +176,8 @@ router.post('/checkuser', function(req, response) {
 
 });
 
-/ POST to Add marker Service /
-router.post('/adduser', function(req, response) {
+/ POST to Add a user /
+router.put('/adduser', function(req, response) {
     console.log("add user ");
     // Set our database ( bondi here) 
    
@@ -236,7 +232,7 @@ router.post('/adduser', function(req, response) {
 });
 
 / POST to supp marker /
-router.post('/suppmarker', function(req, res) {
+router.delete('/suppmarker', function(req, res) {
 console.log("trouvé");
     // Set our database ( bondi here) 
     var db = req.db;
@@ -262,7 +258,7 @@ console.log("trouvé");
     });
 });
 / POST to supp user /
-router.post('/suppuser', function(req, res) {
+router.delete('/suppuser', function(req, res) {
 console.log("trouvé");
     // Set our database ( bondi here) 
     var db = req.db;
@@ -287,7 +283,7 @@ console.log("trouvé");
             res.send("There was a problem adding the information to the database.");
         }
         else {
-            //TODO
+            
             //res.redirect("userlist");
         }
     });
@@ -315,7 +311,7 @@ router.post('/gettokenpseudo', function(req, response) {
     }
 });
 /Ajout d'un like dans la DDB/
-router.post('/addlike', function(req, response){
+router.put('/addlike', function(req, response){
     console.log("1");
     // Set our database ( bondi here) 
     var db = req.db;
@@ -379,7 +375,7 @@ router.get('/listlikes', function(req, res) {
 });
 
 / update the nblike on a marker /
-router.post('/updatelikemarker', function(req, response) {
+router.put('/updatelikemarker', function(req, response) {
     console.log("like : ");
     console.log(req.body.oidimage);
 
