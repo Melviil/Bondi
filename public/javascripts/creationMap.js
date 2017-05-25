@@ -292,7 +292,9 @@ function getPseudoIfConnected(){
 function addLike(oidmarker){
   console.log(pseudoUser);
   console.log("Avant like");
-if(pseudoUser != ''){
+
+
+if(pseudoUser == ''){
     alert("You need to be connectec to like pics.");
 }else{
 
