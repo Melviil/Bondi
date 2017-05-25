@@ -136,11 +136,11 @@ var bounds2 = new L.LatLngBounds(
 
            
             if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){ 
-                if (checkIfUrlValid(image)){
+               // if (checkIfUrlValid(image)){
                     addMarkerDdb(lat, lng, person, place, year, image);
-                }else{
-                    alert("The url is not an image");
-                }     
+                //}else{
+                 //   alert("The url is not an image");
+                //}     
             };
         }
 
