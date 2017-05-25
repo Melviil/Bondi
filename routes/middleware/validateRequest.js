@@ -10,8 +10,8 @@ module.exports = function(req, res, next) {
   // We skip the token outh for [OPTIONS] requests.
   //if(req.method == 'OPTIONS') next();
  
-  var token = req.headers.cookie;
-  console.log(req.headers.cookie);
+  var token = req.cookies.token;
+  console.log(req.cookies.token);
       console.log(token);
   if (token) {
     try {

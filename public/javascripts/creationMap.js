@@ -46,8 +46,8 @@ var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
-        
     addMarkers();
+    
         /*map.on('zoomend', function () {
             
        if ( map.getZoom()<2){
@@ -70,7 +70,7 @@ var bounds2 = new L.LatLngBounds(
             newMarkerButton(e);
             
         };
-        addMarkers();
+    
         $( "#btn-original" ).click(function() {
           urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
           L.tileLayer(urlmap, options).addTo(map);
@@ -90,6 +90,10 @@ var bounds2 = new L.LatLngBounds(
         }else{
             $("logout").hide();
         }
+        $( "#logout" ).click(function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';  
+            window.location.replace("/");
+        });
       
     };
 
@@ -98,11 +102,11 @@ var bounds2 = new L.LatLngBounds(
             lat = e.latlng.lat;
             lng = e.latlng.lng;
             console.log(lat);
-            console.log(lng);
-            if (pseudoUser != ""){ // la personne est connecté
-                person = pseudoUser;
+            console.log(pseudoUser);
+            if (document.cookie == ""){ // la personne est connecté
+               alert("Sorry, you should be connected to add a map");
             }else{
-                person = prompt("Please enter your name:", "");
+                person = pseudoUser;
             }
             if (person != "" && person != null){
 
@@ -147,7 +151,7 @@ var bounds2 = new L.LatLngBounds(
             if (pseudoUser != ""){ // la personne est connecté
                 person = pseudoUser;
             }else{
-                person = prompt("Please enter your name:", "");
+               alert("You need to be connected to add a pic");
             }
             if (person != "" && person != null){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
@@ -188,18 +192,22 @@ function addMarkers(){
             dataType: "json"}
             ).done(function(data){
                 for ( var i in data){
-                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
-                    if (data[i].place == ""){ // on ne met pas la ville
-                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p></div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
-               
+                    if (data[i].nblike == 0){
+                        urllike = "like.png";
                     }else{
-
-                        marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/like.png\" width=\"24px\" height=\24px\" /></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
-
+                        urllike = "likered.png";
                     }
+                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
+                        if (data[i].place == ""){ // on ne met pas la ville
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p><input id=\""+data[i]._id+"\" class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+                   
+                        }else{
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input id=\""+data[i]._id+"\" class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+
+                        }
                     marker.addTo(map);
                 }
-
+                
             }).fail(function(err){
                 console.log(err);
             });
@@ -221,13 +229,14 @@ function addMarkerDdb( lat,lng,person,place, year,image){
                     "year" : year,
                     "latitude" : lat,
                     "longitude" : lng,
-                    "url" : image
+                    "url" : image,
+                    "nblike" : "0"
                 };
                  $.ajax({
 
                     method: "POST",
-                   //url: 'http://localhost:3000/addmarker',
-                   url: "https://bondi.herokuapp.com/addmarker",
+                   url: 'http://localhost:3000/addmarker',
+                   //url: "https://bondi.herokuapp.com/addmarker",
                     data: data,
                     dataType: "json"
                      
@@ -259,9 +268,10 @@ function checkIfUrlValid(image){
 // on sait qu'il a un cookie, on va récupérer son pseudo
 function getPseudoIfConnected(cookie){
     var pseudo;
+    console.log('cookie envoyée');
     console.log(cookie);
 data = {
-   "token" : document.cookie,
+   "token" : cookie,
   };
     $.ajax({
         async : false,
@@ -277,22 +287,65 @@ data = {
           },
 
           method: "POST",
-          //url: "http://localhost:3000/gettokenpseudo",
-        url: "https://bondi.herokuapp/checkuser",
+          url: "http://localhost:3000/gettokenpseudo",
+        //url: "https://bondi.herokuapp/checkuser",
             data: data,
             dataType: "json"
           });
-
     return pseudo;
 }
-function addLike(oidimage){
-console.log(oidimage);
-if(pseudoUser != undefined){
-console.log(pseudoUser);
-}else{
+function addLike(oidmarker){
+if(typeof pseudoUser === 'undefined'){
     alert("You need to be connectec to like pics.");
+}else{
+
+    if ( $("#"+oidmarker).attr("src") == "img/like.png"){
+        $("#"+oidmarker).attr("src", "img/likered.png");
+        data = {
+       "oidimage" : oidmarker,
+       "pseudoUser" : pseudoUser
+             };
+             
+        $.ajax({
+              method: "POST",
+              url: "http://localhost:3000/addlike",
+            //url: "https://bondi.herokuapp/addlike",
+                data: data,
+                dataType: "json",
+              
+               statusCode: {
+            400: function() {
+              alert('Photo already liked');
+            },
+            500: function() {
+              alert('500 status code! server error');
+            },
+            200: function(){
+                alert('On va ajouter le like mamene');
+                var data2 = {
+       "oidimage" : oidmarker,
+             };
+        $.ajax({
+              method: "POST",
+              url: "http://localhost:3000/updatelikemarker",
+            //url: "https://bondi.herokuapp/addlike",
+                data: data2,
+                dataType: "json",
+              
+               statusCode: {
+            400: function() {
+              alert('400 status code! user error');
+            },
+            500: function() {
+              alert('500 status code! server error');
+            }
+          }
+    });
+            }
+          }
+    });
+         
+    }
+    }
 }
 
-}
-
-  
