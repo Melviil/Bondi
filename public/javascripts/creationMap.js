@@ -235,30 +235,14 @@ function addMarkerDdb( lat,lng,person,place, year,image){
                  $.ajax({
 
                     method: "POST",
-                   url: 'http://localhost:3000/addmarker',
-                   //url: "https://bondi.herokuapp.com/addmarker",
-                    data: data,
-                    dataType: "json"
-                     
-                });
-}
-function addCityDdb( lat,lng,place){
-               
-                data = {
-                    "place" : place,
-                    "lat" : lat,
-                    "lng" : lng
-                };
-                 $.ajax({
-
-                    method: "POST",
                    //url: 'http://localhost:3000/addmarker',
-                   url: "https://bondi.herokuapp.com/add",
+                   url: "https://bondi.herokuapp.com/addmarker",
                     data: data,
                     dataType: "json"
                      
                 });
 }
+
 
 function checkIfUrlValid(image){
 
@@ -287,8 +271,8 @@ data = {
           },
 
           method: "POST",
-          url: "http://localhost:3000/gettokenpseudo",
-        //url: "https://bondi.herokuapp/checkuser",
+          //url: "http://localhost:3000/gettokenpseudo",
+            url: "https://bondi.herokuapp/gettokenpseudo",
             data: data,
             dataType: "json"
           });
@@ -308,8 +292,8 @@ if(typeof pseudoUser === 'undefined'){
              
         $.ajax({
               method: "POST",
-              url: "http://localhost:3000/addlike",
-            //url: "https://bondi.herokuapp/addlike",
+             // url: "http://localhost:3000/addlike",
+            url: "https://bondi.herokuapp/addlike",
                 data: data,
                 dataType: "json",
               
@@ -327,8 +311,8 @@ if(typeof pseudoUser === 'undefined'){
              };
         $.ajax({
               method: "POST",
-              url: "http://localhost:3000/updatelikemarker",
-            //url: "https://bondi.herokuapp/addlike",
+            //  url: "http://localhost:3000/updatelikemarker",
+            url: "https://bondi.herokuapp/updatelikemarker",
                 data: data2,
                 dataType: "json",
               
