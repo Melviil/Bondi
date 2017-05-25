@@ -17,8 +17,8 @@ function generate(){
 function buildHtmlTableMarkers(selector) {
 $.ajax({
             method: "GET",
-           url: "http://localhost:3000/markerlist",
-           //url: "https://bondi.herokuapp.com/markerlist",
+           //url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
             dataType: "json"}
             ).done(function(data){
  var columns = addAllColumnHeaders(data, selector);
@@ -41,8 +41,8 @@ $.ajax({
 function buildHtmlTableUsers(selector) {
 $.ajax({
             method: "GET",
-           url: "http://localhost:3000/userlist",
-           //url: "https://bondi.herokuapp.com/userlist",
+           //url: "http://localhost:3000/userlist",
+           url: "https://bondi.herokuapp.com/userlist",
             dataType: "json"}
             ).done(function(data){
  var columns = addAllColumnHeaders(data, selector);
