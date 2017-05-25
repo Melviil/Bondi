@@ -28,7 +28,7 @@ function checkPasswd() {
 
       method: "POST",
       //url: "http://localhost:3000/checkuser",
-      url: "https://bondi.herokuapp/checkuser",
+      url: "https://bondi.herokuapp.com/checkuser",
       data: data,
       dataType: "json"
       });
