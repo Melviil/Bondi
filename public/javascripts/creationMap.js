@@ -20,6 +20,7 @@ var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
+      console.log(document.cookie);
         getPseudoWithCookie();
         
          console.log("LAAAAA");
@@ -261,10 +262,10 @@ function checkIfUrlValid(image){
 }
 function getPseudoWithCookie(){
    
-var pseudo;
- data = {
-                    "token" : document.coookie
-                };
+var token = document.cookie.substring(6); // désolé je n'ai pas réussi autrement, soit Safari soit Firefox
+    data = {                              // ne marchait pas avec la façon propre de la chose
+      "token" : token
+      };
 
     $.ajax({
       async:false,
@@ -284,7 +285,7 @@ var pseudo;
           },
 
           method: "POST",
-      //  url: "http://localhost:3000/gettokenpseudo",
+       //url: "http://localhost:3000/gettokenpseudo",
        url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
