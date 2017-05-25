@@ -392,10 +392,10 @@ router.post('/gettokenpseudo', function(req, response) {
     console.log(decoded.pseudo);
     // Check if we have the pseudo
     if ( decoded.pseudo !=""){
-        response.status(200);
-        response.send({pseudo : decoded.pseudo});
+       return response.status(200);
+        return response.send({pseudo : decoded.pseudo});
     }else{
-        response.sendStatus(400);
+        return response.sendStatus(400);
     }
 });
 

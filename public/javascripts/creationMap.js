@@ -296,6 +296,7 @@ var pseudo;
     return pseudo;
 }
 function addLike(oidmarker){
+   pseudoUser = getPseudoWithCookie();
   console.log(pseudoUser);
   console.log("Avant like");
 
