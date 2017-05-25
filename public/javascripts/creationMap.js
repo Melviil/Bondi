@@ -20,9 +20,9 @@ var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
-        if ( document.cookie != ""){
+        
          getPseudoIfConnected();
-       }
+       
          console.log("LAAAAA");
          console.log(pseudoUser);
         if (document.cookie != ""){
@@ -290,7 +290,9 @@ function getPseudoIfConnected(){
     
 }
 function addLike(oidmarker){
-if(typeof pseudoUser === 'undefined'){
+  console.log(pseudoUser);
+  console.log("Avant like");
+if(pseudoUser != ''){
     alert("You need to be connectec to like pics.");
 }else{
 
