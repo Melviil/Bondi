@@ -340,7 +340,7 @@ function addLikes(){
     $.ajax({
               method: "GET",
             //  url: "http://localhost:3000/listlikes",
-            url: "https://bondi.herokuapp/listlikes",
+            url: "https://bondi.herokuapp.com/listlikes",
                 data: data,
                 dataType: "json"})
               .done(function(data){
