@@ -276,7 +276,7 @@ data = {
 
           method: "POST",
           //url: "http://localhost:3000/gettokenpseudo",
-            url: "https://bondi.herokuapp.com/gettokenpseudo",
+          url: "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
@@ -337,25 +337,26 @@ if(typeof pseudoUser === 'undefined'){
 }
 
 function addLikes(){
+  console.log("hey im in addlikes");
     $.ajax({
-              type: "PUT",
-            // url: "http://localhost:3000/listlikes",
+              method:"GET",
+             //url: "http://localhost:3000/listlikes",
             url: "https://bondi.herokuapp.com/listlikes",
                 data: data,
                 dataType: "json"})
               .done(function(data){
+                console.log("list des likes:");
+                  console.log(data);
                 for ( var i in data){
+                  
                     if(data[i].pseudo == pseudoUser){
                         console.log(data[i].idmarker);
                         imagesliker.push(data[i].idmarker);
                             console.log(imagesliker.length);
-                    }else{
-                         
                     }
                 }
 
             }).fail(function(err){
                 console.log(err);
             });
-        
 }

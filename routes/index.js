@@ -258,6 +258,128 @@ console.log("trouvé");
     });
     
 });
+/ POST to supp like by pseudo /
+router.delete('/supplikesbypseudo', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    var pseudo = req.body.pseudo;
+    console.log("supplikesbypseudo");
+    // Set our collection
+    var likecollection = db.get('likecollection');
+
+   
+            likecollection.remove({"pseudo" : pseudo}), function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.sendStatus("There was a problem adding the information to the database.");
+        }
+        else {
+            res.sendStatus(200);
+            //res.redirect("userlist");
+        }
+    };
+            
+   
+});
+/ POST to supp marker by pseudo /
+router.delete('/suppmarkersbypseudo', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    var pseudo = req.body.pseudo;
+
+    // Set our collection
+    var markercollection = db.get('markercollection');
+
+   
+            markercollection.remove({"pseudo" : pseudo}), function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.sendStatus("There was a problem adding the information to the database.");
+        }
+        else {
+            res.sendStatus(200);
+            //res.redirect("userlist");
+        }
+    };
+            
+   
+});
+router.delete('/suppuserbypseudo', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    var pseudo = req.body.pseudo;
+
+    // Set our collection
+    var usercollection = db.get('usercollection');
+
+   
+            usercollection.remove({"pseudo" : pseudo}), function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.sendStatus("There was a problem adding the information to the database.");
+        }
+        else {
+            res.sendStatus(200);
+            //res.redirect("userlist");
+        }
+    };
+            
+   
+});
+router.delete('/supplikesbyidmarker', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    var id = req.body.idmage;
+
+    // Set our collection
+    var likecollection = db.get('likecollection');
+
+   
+            usercollection.remove({"idmarker" : id}), function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.sendStatus("There was a problem adding the information to the database.");
+        }
+        else {
+            res.sendStatus(200);
+            //res.redirect("userlist");
+        }
+    };
+            
+   
+});
+router.delete('/suppmarkerbyidmarker', function(req, res) {
+
+    // Set our database ( bondi here) 
+    var db = req.db;
+
+    var id = req.body.idmage;
+
+    // Set our collection
+    var markercollection = db.get('markercollection');
+
+   
+            markercollection.remove({"_id" : id}), function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.sendStatus("There was a problem adding the information to the database.");
+        }
+        else {
+            res.sendStatus(200);
+            //res.redirect("userlist");
+        }
+    };
+            
+   
+});
 / POST to supp user /
 router.delete('/suppuser', function(req, res) {
 console.log("trouvé");
@@ -267,6 +389,7 @@ console.log("trouvé");
     var id = req.body.id;
   console.log(id);
   console.log("on va supp");
+
     // Set our collection
     var usercollection = db.get('usercollection');
     var markercollection = db.get('markercollection');
@@ -274,7 +397,10 @@ console.log("trouvé");
       usercollection.find({ "_id": id },function(err, result){
         console.log(result[0].pseudo);
          markercollection.find({ "pseudo" : result[0].pseudo },function(err, resultmark){
+            console.log(resultmark[0]._id);
             likecollection.remove({"idmarker" : resultmark[0]._id});
+            
+    });
          });
         markercollection.remove({
             "pseudo" : result[0].pseudo
@@ -293,7 +419,7 @@ console.log("trouvé");
         }
     });
         }); 
-});
+
 / find the pseudo in the token /
 router.post('/gettokenpseudo', function(req, response) {
     console.log("token");console.log("token");console.log("token");console.log("token");console.log("token");

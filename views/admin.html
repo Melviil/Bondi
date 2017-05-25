@@ -94,17 +94,26 @@ function destroyMarker(){
             if (confirm == "yes"){
               console.log("on supp");
      data = {
-                        "id" : supp.value
+                        "idimage" : supp.value
                     };
                      $.ajax({
 
-                        type: "DELETE",
-                       //url: 'http://localhost:3000/suppmarker',
-                       url: "https://bondi.herokuapp.com/suppmarker",
-                        data: data,
-                        dataType: "json"
-                         
-                    });
+                      type: "DELETE",
+                     //url: 'http://localhost:3000/supplikesbyidmarker',
+                     url: "https://bondi.herokuapp.com/supplikesbyidmarker",
+                      data: data,
+                      dataType: "json"
+                       
+                  }); 
+                   $.ajax({
+
+                      type: "DELETE",
+                     //url: 'http://localhost:3000/suppmarkerbyidmarker',
+                     url: "https://bondi.herokuapp.com/suppmarkerbyidmarker",
+                      data: data,
+                      dataType: "json"
+                       
+                  }); 
     }
     window.setTimeout(function(){
 
@@ -119,13 +128,31 @@ function destroyUserandMarkers(){
  confirm = prompt("sure to remove ? Yes to delete", "");
             if (confirm == "yes"){
                   data = {
-                      "id" : supp.value
+                      "pseudo" : supp.value
                   };
                    $.ajax({
 
                       type: "DELETE",
-                     //url: 'http://localhost:3000/suppuser',
-                     url: "https://bondi.herokuapp.com/suppuser",
+                     //url: 'http://localhost:3000/supplikesbypseudo',
+                     url: "https://bondi.herokuapp.com/supplikesbypseudo",
+                      data: data,
+                      dataType: "json"
+                       
+                  }); 
+                   $.ajax({
+
+                      type: "DELETE",
+                     //url: 'http://localhost:3000/suppmarkersbypseudo',
+                     url: "https://bondi.herokuapp.com/suppmarkersbypseudo",
+                      data: data,
+                      dataType: "json"
+                       
+                  }); 
+                   $.ajax({
+
+                      type: "DELETE",
+                     //url: 'http://localhost:3000/suppuserbypseudo',
+                     url: "https://bondi.herokuapp.com/suppuserbypseudo",
                       data: data,
                       dataType: "json"
                        
@@ -151,7 +178,7 @@ window.setTimeout(function(){
   </table>
   <table id="user" border="1">
    <h1 id="nbuser"></h1>
-   <textarea id ="deleteUser" placeholder="Put the id to delete ( all the marker from this suer will be destroy)"></textarea>
+   <textarea id ="deleteUser" placeholder="Put the pseudo to delete "></textarea>
    <input type="button" value="remove" id="deleteUserbutton" onclick="destroyUserandMarkers()" />
 
   </table>
