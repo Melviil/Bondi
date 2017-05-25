@@ -282,8 +282,8 @@ var pseudo;
           },
 
           method: "POST",
-        //url: "http://localhost:3000/gettokenpseudo",
-        url : "https://bondi.herokuapp.com/gettokenpseudo",
+        url: "http://localhost:3000/gettokenpseudo",
+       // url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
@@ -296,7 +296,7 @@ function addLike(oidmarker){
   console.log("Avant like");
 
 
-if(typeof pseudoUser == 'undefined'){
+if(typeof pseudoUser === 'undefined'){
     alert("You need to be connectec to like pics.");
 }else{
 
@@ -316,7 +316,7 @@ if(typeof pseudoUser == 'undefined'){
               
                statusCode: {
             400: function() {
-              alert('Photo already liked');
+              alert('Photo already likedl');
             },
             500: function() {
               alert('500 status code! server error');
