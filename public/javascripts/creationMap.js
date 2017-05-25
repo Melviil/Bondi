@@ -21,7 +21,7 @@ var isLogged = false;
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
     function initMap() {
         
-         getPseudoWithCookie();
+         pseudoUser = getPseudoWithCookie();
          console.log("LAAAAA");
          console.log(pseudoUser);
         if (document.cookie != ""){
@@ -258,35 +258,38 @@ function checkIfUrlValid(image){
 
      return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
-// on sait qu'il a un cookie, on va récupérer son pseudo
 function getPseudoWithCookie(){
-    
-
+    console.log("DEBUT DE FCT");
+    console.log(pseudoUser);
+var pseudo;
     $.ajax({
       async:false,
         statusCode: {
           400: function(response) {
             alert("Veuillez vous reconnectez");
+            pseudoUser="";
           },
 
           200: function(response) { // si on connait l'utilisateur alors on lui donne un Token
             
 
           
-           pseudoUser =response.pseudo;
-           
-
+           pseudo =response.pseudo;
+           console.log("MILIEU FCT");
+           console.log(pseudo);
+          console.log(response.pseudo);
             }
           },
 
           method: "POST",
         //url: "http://localhost:3000/gettokenpseudo",
-         url : "https://bondi.herokuapp.com/gettokenpseudo",
+        url : "https://bondi.herokuapp.com/gettokenpseudo",
             data: data,
             dataType: "json"
           });
-    
-    
+    console.log("FIN DE FCT");
+    console.log(pseudo);
+    return pseudo;
 }
 function addLike(oidmarker){
   console.log(pseudoUser);

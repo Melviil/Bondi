@@ -420,6 +420,7 @@ console.log("trouvé");
     });
         }); 
 
+
 / find the pseudo in the token /
 router.post('/gettokenpseudo', function(req, response) {
 
@@ -437,6 +438,9 @@ router.post('/gettokenpseudo', function(req, response) {
         response.sendStatus(400);
     }
 });
+
+
+
 /Ajout d'un like dans la DDB/
 router.put('/addlike', function(req, response){
     console.log("1");
