@@ -108,11 +108,9 @@ var bounds2 = new L.LatLngBounds(
 
        
         function newMarkerMap(e){
-           pseudoUser = getPseudoWithCookie();
             lat = e.latlng.lat;
             lng = e.latlng.lng;
-            console.log(lat);
-            console.log(pseudoUser);
+            
             if (document.cookie == ""){ // la personne est connecté
                alert("Sorry, you should be connected to add a map");
             }else{
@@ -210,10 +208,10 @@ function addMarkers(){
                     }
                     marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
                         if (data[i].place == ""){ // on ne met pas la ville
-                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p><input id=\""+data[i]._id+"\" class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p><div id=\""+data[i]._id+"\" ><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
                    
                         }else{
-                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><input id=\""+data[i]._id+"\" class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><div id=\""+data[i]._id+"\" ><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
 
                         }
                     marker.addTo(map);
@@ -302,8 +300,8 @@ if(typeof pseudoUser === 'undefined'){
     alert("You need to be connectec to like pics.");
 }else{
 
-    if ( $("#"+oidmarker).attr("src") == "img/like.png"){
-        $("#"+oidmarker).attr("src", "img/likered.png");
+    if ( $("div#"+oidmarker+" input").attr("src") == "img/like.png"){
+        console.log(" LE TEST");
         data = {
        "oidimage" : oidmarker,
        "pseudoUser" : pseudoUser
@@ -323,7 +321,12 @@ if(typeof pseudoUser === 'undefined'){
             500: function() {
               alert('500 status code! server error');
             },
-            200: function(){
+            200: function(){ // si le like a été ajouté
+               $("div#"+oidmarker+" input").attr("src", "img/likered.png");
+               var nouveauNbLike = $("div#"+oidmarker+" p").text();
+               $("div#"+oidmarker+" p").text(parseInt(nouveauNbLike)+1);
+               console.log(nouveauNbLike);
+
                 var data2 = {
        "oidimage" : oidmarker,
              };
