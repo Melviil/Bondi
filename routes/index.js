@@ -387,8 +387,9 @@ router.post('/gettokenpseudo', function(req, response) {
     // Set our database ( bondi here) 
     var db = req.db;
     // Get the decoded token
-    var decoded = jwt.decode(req.cookies.token, secretToken);
+    var decoded = jwt.decode(req.body.token, secretToken);
     console.log("DECODEEEEEEEED");
+    console.log(r)
     console.log(req.cookies.token);
     // Check if we have the pseudo
     if ( decoded.pseudo !=""){

@@ -262,6 +262,10 @@ function checkIfUrlValid(image){
 function getPseudoWithCookie(){
    
 var pseudo;
+ data = {
+                    "token" : document.coookie
+                };
+
     $.ajax({
       async:false,
         statusCode: {
