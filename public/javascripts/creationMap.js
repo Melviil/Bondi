@@ -107,6 +107,7 @@ var bounds2 = new L.LatLngBounds(
 
        
         function newMarkerMap(e){
+           pseudoUser = getPseudoWithCookie();
             lat = e.latlng.lat;
             lng = e.latlng.lng;
             console.log(lat);
@@ -155,6 +156,7 @@ var bounds2 = new L.LatLngBounds(
 
 
         function newMarkerButton(e){
+           pseudoUser = getPseudoWithCookie();
            console.log(pseudoUser);
             if (pseudoUser != ""){ // la personne est connecté
                 person = pseudoUser;
@@ -192,6 +194,7 @@ var bounds2 = new L.LatLngBounds(
    
         };
 function addMarkers(){
+   pseudoUser = getPseudoWithCookie();
               //Fonction allant chercher les données de tous les markers et le ajoutant sur la map
         $.ajax({
             method: "GET",
@@ -224,6 +227,7 @@ function addMarkers(){
            
 }
 function addMarkerDdb( lat,lng,person,place, year,image){
+   pseudoUser = getPseudoWithCookie();
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 if (place == ""){ // on ne met pas la ville
                         marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + image+ "> </br> <p>" + person + ", " + year+"</p></div>", {permanent: false, className: "my-label", offset: [0, 0] }).openPopup();
