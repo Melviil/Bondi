@@ -1,39 +1,39 @@
  	.leaflet-control-attribution.leaflet-control {
-    display: none !important;
-}
- 	.pic{
- 		max-width: 400px;
- 		max-height: 400px;
- 	}
- 	.
- 	.post p{
- 		font-family: cursive;
- 	}
- 	
- 	#admin{
- 		position: absolute;
-    right: 0;
-    max-width: 75px;
-    top: 36%;
- 	}
- 	#about{
- 		position: absolute;
-    right: 0;
-    max-width: 75px;
-    top: 58%;
- 	}
- 	.leaflet-left {
+        display: none !important;
+    }
+    .pic{
+     max-width: 400px;
+     max-height: 400px;
+ }
+ .
+ .post p{
+     font-family: cursive;
+ }
+ 
+ #admin{
+     position: absolute;
+     right: 0;
+     max-width: 75px;
+     top: 36%;
+ }
+ #about{
+     position: absolute;
+     right: 0;
+     max-width: 75px;
+     top: 58%;
+ }
+ .leaflet-left {
     right: 0 !important;
     margin-right: 30px !important;
     left : inherit !important;
 }
-    .btn-group{
+.btn-group{
     position: absolute;
     top: 0;
     right: 42%;
     z-index: 1000;
-    }
-    button.btn.btn-secondary {
+}
+button.btn.btn-secondary {
     background-color: white;
     color: grey;
 }
@@ -45,10 +45,10 @@
     margin-top: -10%;
 }
 .numberLikes{
-       font-size: 22px;
-    margin-top: -10.5% !important;
-    float: right;
-    margin-right: 8% !important;
+ font-size: 22px;
+ margin-top: -10.5% !important;
+ float: right;
+ margin-right: 8% !important;
 }
 
 

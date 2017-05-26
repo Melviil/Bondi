@@ -6,36 +6,31 @@ var secret = require('../routes/private.js');
 var secretToken = require('../routes/privatetoken');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Bondi' });
-    var db = req.db;
-   /* var collection = db.get('markercollection');
-    collection.find({},{},function(e,docs){
-        res.render('index', {
-            "markerlist" : docs
-        });
-    });*/
+  res.render('index');
+  var db = req.db;
 });
 
 exports.index = function(req, res){
-res.render('index', { title: 'ejs' });};
+    res.render('index');
+};
 
 module.exports = router;
 
 / GET connection page. /
 router.get('/connection', function(req, res) {
-    res.render('connection', { title: 'connection' }); 
+    res.render('connection'); 
 });
 / GET register page. /
 router.get('/register', function(req, res) {
-    res.render('register', { title: 'register' }); 
+    res.render('register'); 
 });
 / GET the about page. /
 router.get('/about', function(req, res) {
-    res.render('about', { title: 'about' });
+    res.render('about');
 });
 / GET Map page. /
 router.get('/index', function(req, res) {
-    res.render('index', { title: 'Bondi' });
+    res.render('index');
     var db = req.db;
     var collection = db.get('markercollection');
     collection.find({},{},function(e,docs){
@@ -44,16 +39,13 @@ router.get('/index', function(req, res) {
         });
     });  
 });
-
-
-
 / GET Userlist page. /
 router.get('/userlist', function(req, res) {
-     var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.status(200).json(docs);
-    });
+ var db = req.db;
+ var collection = db.get('usercollection');
+ collection.find({},{},function(e,docs){
+    res.status(200).json(docs);
+});
 });
 / GET MarkerList page. /
 router.get('/markerlist', function(req, res) {
@@ -63,20 +55,21 @@ router.get('/markerlist', function(req, res) {
         res.status(200).json(docs);
     });
 });
-
-/ GET New User page. /
-router.get('/newuser', function(req, res) {
-    res.render('newuser', { title: 'Add New User' });
+/ Get the list of likes. /
+router.get('/listlikes', function(req, res) {
+    var db = req.db;
+    var collection = db.get('likecollection');
+    collection.find({},{},function(e,docs){
+        res.status(200).json(docs);
+    });
 });
 
 / POST to Add marker Service /
 router.put('/addmarker', function(req, res) {
-    console.log("add a marker");
-    // Set our database ( bondi here) 
-   
-    var db = req.db;
-    console.log(req.body);
-    // Get all the markers informations
+     // recupère la variable de la bdd
+     var db = req.db;
+     console.log(req.body);
+    // Get the marker informations
     var pseudo = req.body.person;
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
@@ -90,7 +83,7 @@ router.put('/addmarker', function(req, res) {
     var collection = db.get('markercollection');
     console.log("ON ANJOUTE");
     // Submit the marker to the DB
-   collection.insert({
+    collection.insert({
         "pseudo" : pseudo,
         "latitude" : latitude,
         "longitude" : longitude,
@@ -112,24 +105,24 @@ router.put('/addmarker', function(req, res) {
 
 / POST to check if a user exists/
 router.post('/checkuser', function(req, response) {
-   
-    // Set our database ( bondi here) 
-   
-    var db = req.db;
- 
-    // Get all the markers informations
-    var pse = req.body.pseudo;
-   var pas = req.body.password;
-   var pascheck = req.body.passwordcheck; // pour plus de sécurité
-    
 
-    // Set our collection
+     // recupère la variable de la bdd
+
+     var db = req.db;
+
+    // Get the user informations
+    var pse = req.body.pseudo;
+    var pas = req.body.password;
+   var pascheck = req.body.passwordcheck; // pour éviter les instrusions en changeant le JS
+
+
+    //check same paswwords
     if ( pas != pascheck){
-    var collection = db.get('usercollection');
-    collection.find({ pseudo: pse },function(err, result){
-        console.log("recherche");
-        if (!result.length) {
-            console.log("no");
+        var collection = db.get('usercollection');
+        collection.find({ pseudo: pse },function(err, result){
+            console.log("recherche");
+            if (!result.length) {
+                console.log("no");
             response.sendStatus(400); //mauvais pseudo
 
         } 
@@ -138,33 +131,33 @@ router.post('/checkuser', function(req, response) {
         crypted += cipher.final('hex');
         console.log(crypted);
         console.log(result[0].password);
-         
-       if ( crypted == result[0].password){
 
-              var userInfo = {
-                pseudo: result[0].pseudo,
-                name: result[0].name,
-                password: result[0].password,
-                admin : result[0].admin
-            }
- 
-            
-            console.log("Utilisateur connu");
-            
-           var token = jwt.sign({
-              pseudo: pse
-            }, secretToken, { expiresIn: '1h' });
-           // windows session storage 
-          
+       if ( crypted == result[0].password){ //mot de passe bdd == mot de basse rentré crypté ? 
 
-            response.status(200);
-            response.send({
-                token : token
-            });
-            console.log("bien envoyé");
-
+          var userInfo = {
+            pseudo: result[0].pseudo,
+            name: result[0].name,
+            password: result[0].password,
+            admin : result[0].admin
         }
-        else{
+
+
+        console.log("Utilisateur connu");
+
+        var token = jwt.sign({
+          pseudo: pse
+            }, secretToken); // on met dans le token le pseudo de la personne crypté
+           // windows session storage 
+
+
+           response.status(200);
+           response.send({
+            token : token
+        });
+           console.log("bien envoyé");
+
+       }
+       else{
             response.sendStatus(400); // mauvais pass
         }
     });
@@ -172,74 +165,64 @@ router.post('/checkuser', function(req, response) {
         response.sendStatus(400); // mauvais pass
     }
     
-     
+
 
 });
 
 / POST to Add a user /
 router.put('/adduser', function(req, response) {
     console.log("add user ");
-    // Set our database ( bondi here) 
-   
-    var db = req.db;
-    console.log(req.body);
-    // Get all the markers informations
+     // recupère la variable de la bdd
+
+     var db = req.db;
+     console.log(req.body);
+    // Get all the user  informations
     var pse = req.body.pseudo;
     var nam = req.body.name;
-   var pas = req.body.password;
-   
+    var pas = req.body.password;
+
     // Set our collection
     var collection = db.get('usercollection');
 
-    collection.find({ pseudo: pse },function(err, res){
+    collection.find({ pseudo: pse },function(err, res){ // on regarde que le pseudo n'existe pas
         if (!res.length) {
             console.log("nouvel utilisateur");
             / Cryptage /
             var cipher = crypto.createCipher('aes-256-ctr',pas)
             var crypted = cipher.update(secret,'utf8','hex')
-            crypted += cipher.final('hex');
-             var token = jwt.sign({
-              pseudo: pse
-            }, secretToken, { expiresIn: '1h' });
+            crypted += cipher.final('hex'); // on crypte le password avec une clé et un secret
+
             /insertion /
             collection.insert({
-            "pseudo" : pse,
-            "name" : nam,
-            "password" : crypted,
-            "admin" : "false"
-        }, function (err, doc) {
-            if (err) {
+                "pseudo" : pse,
+                "name" : nam,
+                "password" : crypted,
+                "admin" : "false"
+            }, function (err, doc) {
+                if (err) {
                 // If it failed, return error
                 response.send("There was a problem adding the information to the database.");
             }
-            else {
-                 var token = jwt.sign({
-              pseudo: pse
-            }, secretToken, { expiresIn: '1h' });
-                 console.log("YAAAA");
-           // windows session storage 
-                response.sendStatus(200);
-                
+            else {    
+                response.sendStatus(200); 
             }
         });
-            }else{
-                console.log("utilsateur existe");
-                response.sendStatus(400);
-            
+        }else{
+                response.sendStatus(400); // pseudo existe, on renvoie une errur 400 interprété par le js
             }
         });
-     
+
 });
 
 / POST to supp marker /
 router.delete('/suppmarker', function(req, res) {
-console.log("trouvé");
-    // Set our database ( bondi here) 
-    var db = req.db;
+    console.log("trouvé");
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    // Get all the markers informations
+    // Get informations about the marker to delete
     var id = req.body.id;
-  
+
     // Set our collection
     var markercollection = db.get('markercollection');
     var likecollectioncollection = db.get('likecollection');
@@ -261,154 +244,142 @@ console.log("trouvé");
 / POST to supp like by pseudo /
 router.delete('/supplikesbypseudo', function(req, res) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    var pseudo = req.body.pseudo;
-    console.log("supplikesbypseudo");
+     var pseudo = req.body.pseudo;
+     console.log("supplikesbypseudo");
     // Set our collection
     var likecollection = db.get('likecollection');
 
-   
-            likecollection.remove({"pseudo" : pseudo}), function (err, doc) {
+
+    likecollection.remove({"pseudo" : pseudo}), function (err, doc) {
         if (err) {
             // If it failed, return error
             res.sendStatus("There was a problem adding the information to the database.");
         }
         else {
             res.sendStatus(200);
-            //res.redirect("userlist");
         }
     };
-            
-   
+
+
 });
 / POST to supp marker by pseudo /
 router.delete('/suppmarkersbypseudo', function(req, res) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    var pseudo = req.body.pseudo;
+     var pseudo = req.body.pseudo;
 
     // Set our collection
     var markercollection = db.get('markercollection');
 
-   
-            markercollection.remove({"pseudo" : pseudo}), function (err, doc) {
+
+    markercollection.remove({"pseudo" : pseudo}), function (err, doc) {
         if (err) {
             // If it failed, return error
             res.sendStatus("There was a problem adding the information to the database.");
         }
         else {
             res.sendStatus(200);
-            //res.redirect("userlist");
         }
     };
-            
-   
+
+
 });
 router.delete('/suppuserbypseudo', function(req, res) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    var pseudo = req.body.pseudo;
+     var pseudo = req.body.pseudo;
 
     // Set our collection
     var usercollection = db.get('usercollection');
 
-   
-            usercollection.remove({"pseudo" : pseudo}), function (err, doc) {
+
+    usercollection.remove({"pseudo" : pseudo}), function (err, doc) {
         if (err) {
             // If it failed, return error
             res.sendStatus("There was a problem adding the information to the database.");
         }
         else {
-            res.sendStatus(200);
-            //res.redirect("userlist");
-        }
-    };
-            
-   
-});
+            res.sendStatus(200);        }
+        };
+
+
+    });
 router.delete('/supplikesbyidmarker', function(req, res) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    var id = req.body.idmage;
+     var id = req.body.idmage;
 
     // Set our collection
     var likecollection = db.get('likecollection');
 
-   
-            usercollection.remove({"idmarker" : id}), function (err, doc) {
+
+    usercollection.remove({"idmarker" : id}), function (err, doc) {
         if (err) {
             // If it failed, return error
             res.sendStatus("There was a problem adding the information to the database.");
         }
         else {
             res.sendStatus(200);
-            //res.redirect("userlist");
         }
     };
-            
-   
+
+
 });
 router.delete('/suppmarkerbyidmarker', function(req, res) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
 
-    var id = req.body.idmage;
+     var id = req.body.idmage;
 
     // Set our collection
     var markercollection = db.get('markercollection');
 
-   
-            markercollection.remove({"_id" : id}), function (err, doc) {
+
+    markercollection.remove({"_id" : id}), function (err, doc) {
         if (err) {
             // If it failed, return error
             res.sendStatus("There was a problem adding the information to the database.");
         }
         else {
             res.sendStatus(200);
-            //res.redirect("userlist");
         }
     };
-            
-   
+
+
 });
 
 / find the pseudo in the token /
 router.post('/gettokenpseudo', function(req, response) {
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
     // Get the decoded token
     var decoded = jwt.decode(req.body.token, secretToken);
-    console.log("DECODEEEEEEEED");
-    console.log(req.body.token);
-    console.log(decoded);
-    console.log(decoded.pseudo);
-    console.log(req.body.token);
     // Check if we have the pseudo
     if ( decoded.pseudo !=""){
        response.status(200);
-        return response.send({pseudo : decoded.pseudo});
-    }else{
-        return response.sendStatus(400);
-    }
+       return response.send({pseudo : decoded.pseudo});
+   }else{
+    return response.sendStatus(400);
+}
 });
 
 
 
 /Ajout d'un like dans la DDB/
 router.put('/addlike', function(req, response){
-    console.log("1");
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
     // Get all the markers informations
     var idimage = req.body.oidimage;
     var pseudo = req.body.pseudoUser;
@@ -417,28 +388,24 @@ router.put('/addlike', function(req, response){
     var usercollection = db.get('usercollection');
     var markercollection = db.get('markercollection');
     var likecollection = db.get('likecollection');
-      usercollection.find({ "pseudo": pseudo },function(err, result){
-        if (result.length > 0 ){
-        console.log("2"); // check user exists au cas où injection js
+    usercollection.find({ "pseudo": pseudo },function(err, result){
+        if (result.length > 0 ){// check user exists au cas où injection js
             markercollection.find({ "_id": idimage },function(err, res){  
-                console.log("3");
-                 if (res.length > 0 ){// check marker exists au cas où injection js
+
+                 if (res.length > 0 ){ // check marker exists au cas où injection js
                     likecollection.find({"pseudo":pseudo, "idmarker": idimage}, function(err,reslike){
-                        console.log("4");
                         if (reslike.length == 0){ // la personne n'a jamais liké cette photo
                             likecollection.insert({
                                 "pseudo" : pseudo,
                                 "idmarker" : idimage
                             });
-                        console.log("5");
-                            ajouteffectue = 1;
-                            response.sendStatus(200);
-                            console.log("6");
-                        }else{
-                             response.sendStatus(400);
-                        }
-                    });
-               
+                        ajouteffectue = 1;
+                        response.sendStatus(200);
+                    }else{
+                     response.sendStatus(400);
+                 }
+             });
+
                 }else{
                     response.sendStatus(400);
                 }
@@ -451,30 +418,19 @@ router.put('/addlike', function(req, response){
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
         }
-        else {
-            //TODO
-            //res.redirect("userlist");
-        }
     });
-        }); 
+}); 
 
 
-/ Get the list of likes. /
-router.get('/listlikes', function(req, res) {
-    var db = req.db;
-    var collection = db.get('likecollection');
-    collection.find({},{},function(e,docs){
-        res.status(200).json(docs);
-    });
-});
+
 
 / update the nblike on a marker /
 router.put('/updatelikemarker', function(req, response) {
     console.log("like : ");
     console.log(req.body.oidimage);
 
-    // Set our database ( bondi here) 
-    var db = req.db;
+     // recupère la variable de la bdd
+     var db = req.db;
     // Get the decoded token
 
     var idimage = req.body.oidimage;
@@ -482,14 +438,14 @@ router.put('/updatelikemarker', function(req, response) {
     var markercollection = db.get('markercollection');
     markercollection.find({ "_id": idimage },function(err, res){ 
         var likes = res[0].nblike+1;
-      markercollection.update( {  "_id": idimage},
+        markercollection.update( {  "_id": idimage},
            {$set :{ "nblike": likes}});
     });
-        
-         
-         markercollection.find({ "_id": idimage },function(err, res){ 
+
+
+    markercollection.find({ "_id": idimage },function(err, res){ 
         console.log(res);
     });
 
-    });
+});
 

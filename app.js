@@ -10,9 +10,7 @@ var jwt = require('jsonwebtoken');
 //connection database local
 var mongo = require('mongodb');
 var monk = require('monk');
-//var db = process.env.MONGOLAB_URI ||
-  //process.env.MONGOHQ_URL ||
-  //'localhost:27017/Bondi';
+// connection heroku
  var db = monk('mongodb://admin:melvil@ds137121.mlab.com:37121/heroku_6pwg8vg8');
 
 var index = require('./routes/index');
@@ -23,12 +21,8 @@ var app = express();
 app.use(require('express-json-promise')());
 app.use(cors({credentials: true, origin: true}));
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(bodyParser.json());

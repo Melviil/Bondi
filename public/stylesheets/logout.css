@@ -2,11 +2,11 @@
 body, html {
     height: 100%;
     background-repeat: no-repeat;
-    background:url(/img/log.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background:url(img/log.jpg) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
 }
 
 .card-container.card {
@@ -26,7 +26,7 @@ body, html {
 /*
  * Card component
  */
- .card {
+.card {
     background-color: #F7F7F7;
     /* just in case there no content*/
     padding: 20px 25px 30px;
@@ -54,7 +54,7 @@ body, html {
 /*
  * Form styles
  */
- .profile-name-card {
+.profile-name-card {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -137,16 +137,4 @@ body, html {
 .forgot-password:active,
 .forgot-password:focus{
     color: rgb(12, 97, 33);
-}
-i#goback{
-    margin-top: 2%;
-    margin-left: 2%;
-    color: white;
-}
-
-a, a:hover{
-    color: inherit;
-}
-input#inputPseudo, input#inputPassword,input#inputName {
-    margin-bottom: 3%;
-}
+	}

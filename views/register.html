@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html >
-  	<head>
-	   <title>#title</title>
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	    <script type="text/javascript" src="/js/bootbox.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-     	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/css/googleform.css">
-        <script type="text/javascript" src="/js/register.js"></script>
-        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
- 
- 	</head>
- 	
-	<body>
-        <a href="/">
+<head>
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/googleform.css">
+    <link rel="stylesheet" type="text/css" href="/css/register.css">
+    <script type="text/javascript" src="/js/register.js"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+    <a href="/">
         <i id="goback" class="fa fa-arrow-circle-left fa-5x" aria-hidden="true"></i>
     </a>
-		 <div class="container">
+    <div class="container">
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
             
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
-                <input type="text" id="inputName" class="form-control" placeholder="Name " required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <input type="password" id="inputCheckPassword" class="form-control" placeholder="Password" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
-                  <input id='inputRegister' class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onclick="checkPassGood()"></input>
-           
-           
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="text" id="inputPseudo" class="form-control" placeholder="Pseudo " required autofocus>
+            <input type="text" id="inputName" class="form-control" placeholder="Name " required autofocus>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input type="password" id="inputCheckPassword" class="form-control" placeholder="Password" required>
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <input id='inputRegister' class="btn btn-lg btn-primary btn-block btn-signin" type="submit" onclick="checkPassGood()"></input>
+            
+            
         </div><!-- /card-container -->
     </div><!-- /container -->
- 	</body>
+</body>
 </html>
