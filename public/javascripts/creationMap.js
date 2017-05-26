@@ -21,14 +21,16 @@ var isLogged = false;
 var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
 function initMap() {
-  getPseudoWithCookie();
+ 
 
   if (document.cookie != ""){ // regler les icones du menu si l'utilisateur est connecté ou pas
+    getPseudoWithCookie(); // si user co on recupère le pseudo
+    addLikes();
     $("#login").hide();
-  $("#register").hide();
-}else{
-  $("logout").hide();
-}
+    $("#register").hide();
+  }else{
+    $("logout").hide();
+  }
   var bounds = new L.LatLngBounds( // Comment va t'on voir la map
     new L.LatLng(-60.000000, -110.000000),
     new L.LatLng(83.000000, 110.000000));
@@ -53,8 +55,7 @@ function initMap() {
       iconAnchor:   [25, 81], // point of the icon which will correspond to marker's location
       shadowAnchor: [4, 62],  // the same for the shadow
       popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
-    });
-  addLikes();
+    });  
   addAllMarkers();
 
   map.on('click', function(e){
@@ -91,7 +92,7 @@ function initMap() {
 
 }
 
-
+// fonction qui ajoute un marqueur à l'endroit où l'utilisateur a cliqué sur la map
 function newMarkerMap(e){
   lat = e.latlng.lat;
   lng = e.latlng.lng;
@@ -106,7 +107,8 @@ function newMarkerMap(e){
        if (year != "" && year != null){
         image = prompt("Send us the URL! you can upload it on : https://goopics.net/ ( direct link) ");
       }
-    }
+    }// requete à l'API de google pour avoir le nom d'un endroit en fonction d'une latitude et longitude
+
     $.ajax({
       async : false,
       url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",}).done(function(data) {
@@ -116,16 +118,15 @@ function newMarkerMap(e){
         place = data.results[1].address_components[0].long_name; 
       }
     });
-
-
-      if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){ 
+    if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){ 
      // if (checkIfUrlValid(image)) prochaine version
       addMarkerDdb(lat, lng, person, place, year, image);   
     };
   }
 
 
-
+// fonction qui ajouter un maruqueur en fonction d'une ville
+// apellé lorsque que le button "add a map est clické"
 function newMarkerButton(e){
   if (document.cookie == ""){ // la personne est connecté
     alert("Sorry, you should be connected to add a new marker");
