@@ -147,3 +147,6 @@ body, html {
     a, a:hover{
         color: inherit;
     }
+input#inputPseudo, input#inputPassword,input#inputName {
+    margin-bottom: 3%;
+}

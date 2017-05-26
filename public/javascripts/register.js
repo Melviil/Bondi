@@ -1,5 +1,6 @@
-
-
+$( document ).ready(function() {
+  $('#inputRegister').val('Register');
+});
 function checkPassGood() {
            //Fonction allant chercher les données de tous les markers
       var pseudo = document.getElementById("inputPseudo").value;

@@ -1,4 +1,6 @@
-
+$( document ).ready(function() {
+  $('#inputConnection').val('Sign in');
+});
 function checkPasswd() {
    //Fonction allant chercher les données de tous les markers
 

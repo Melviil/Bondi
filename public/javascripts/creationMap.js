@@ -16,6 +16,7 @@ var latpop;
 var person;
 var pseudoUser;
 var pseudo;
+var marker; //on va stocker les markeurs ajoutés à la map
 var isLogged = false;
  var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
@@ -59,7 +60,7 @@ var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
             popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
         });
         addLikes();
-    addMarkers();
+    addAllMarkers();
     
         /*map.on('zoomend', function () {
             
@@ -79,8 +80,16 @@ var bounds2 = new L.LatLngBounds(
         }); 
         
            document.getElementById("addmarker").onclick = function(e){
-           
             newMarkerButton(e);
+        };
+         document.getElementById("mypictures").onclick = function(e){
+           
+            addMarkersByPseudo(pseudoUser);
+            
+        };
+        document.getElementById("worldpictures").onclick = function(e){
+           
+          addAllMarkers();
             
         };
     
@@ -112,7 +121,7 @@ var bounds2 = new L.LatLngBounds(
             lng = e.latlng.lng;
             
             if (document.cookie == ""){ // la personne est connecté
-               alert("Sorry, you should be connected to add a map");
+               alert("Sorry, you should be connected to add a new marker");
             }else{
                 person = pseudoUser;
             }
@@ -122,7 +131,7 @@ var bounds2 = new L.LatLngBounds(
                 //if (place != null){
                      year = prompt("When did you took the pic ?", "");
                     if (year != "" && year != null){
-                        image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
+                        image = prompt("Send us the URL! you can upload it on : https://goopics.net/ ( direct link) ");
                     }
                 //}
             }
@@ -155,18 +164,17 @@ var bounds2 = new L.LatLngBounds(
 
 
         function newMarkerButton(e){
-           console.log(pseudoUser);
-            if (pseudoUser != ""){ // la personne est connecté
-                person = pseudoUser;
+           if (document.cookie == ""){ // la personne est connecté
+               alert("Sorry, you should be connected to add a new marker");
             }else{
-               alert("You need to be connected to add a pic");
+                person = pseudoUser;
             }
             if (person != "" && person != null){
                 place = prompt("Where did you took the pic ? ( no accent please)", "");
                 if (place != "" && place != null ){
                     year = prompt("When did you took the pic ?", "");
                     if (year != "" && year != null){
-                        image = prompt("Send us the URL! you can upload it on : http://www.hostingpics.net ");
+                        image = prompt("Send us the URL! you can upload it on : https://goopics.net/ ( direct link) ");
                     }
                 }
             }
@@ -191,7 +199,10 @@ var bounds2 = new L.LatLngBounds(
 
    
         };
-function addMarkers(){
+function addAllMarkers(){
+$( ".leaflet-pane.leaflet-marker-pane img" ).remove();
+ 
+    $( " .leaflet-pane.leaflet-shadow-pane img" ).remove();
               //Fonction allant chercher les données de tous les markers et le ajoutant sur la map
         $.ajax({
             method: "GET",
@@ -215,6 +226,7 @@ function addMarkers(){
 
                         }
                     marker.addTo(map);
+
                 }
                 
             }).fail(function(err){
@@ -223,6 +235,44 @@ function addMarkers(){
 
            
 }
+function addMarkersByPseudo(pseudo){
+  $( ".leaflet-pane.leaflet-marker-pane img" ).remove();
+ 
+    $( " .leaflet-pane.leaflet-shadow-pane img" ).remove();
+ 
+              //Fonction allant chercher les données de tous les markers et le ajoutant sur la map
+        $.ajax({
+            method: "GET",
+           //url: "http://localhost:3000/markerlist",
+           url: "https://bondi.herokuapp.com/markerlist",
+            dataType: "json"}
+            ).done(function(data){
+                for ( var i in data){
+                  if ( data[i]. pseudo == pseudo){
+                    console.log(imagesliker);
+                   if($.inArray(data[i]._id, imagesliker) == -1){
+                        urllike = "like.png";
+                    }else{
+                        urllike = "likered.png";
+                    }
+                    marker = new L.marker([data[i].latitude,data[i].longitude], {icon : blueIcon});
+                        if (data[i].place == ""){ // on ne met pas la ville
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " + data[i].year+"</p><div id=\""+data[i]._id+"\" ><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div>", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+                   
+                        }else{
+                            marker.bindPopup("<div class="+"post"+"><img class =" +"pic"+" src=" + data[i].url + "> </br> <p>" + data[i].pseudo + ", " +data[i].place +", " + data[i].year+"</p><div id=\""+data[i]._id+"\" ><input class=\"like\" type=\"image\" onClick=\"addLike('"+data[i]._id+"')\" src=\"img/"+urllike+"\" width=\"24px\" height=\24px\" />"+"<p class=\"numberLikes\">"+data[i].nblike+"</p>"+"</div></div> ", {permanent: false, className: "my-label", offset: [-100, -100] }).openPopup();
+
+                        }
+                    marker.addTo(map);
+                }
+              }  
+            }).fail(function(err){
+                console.log(err);
+            });
+
+           
+}
+
 function addMarkerDdb( lat,lng,person,place, year,image){
                 marker = new L.marker([lat,lng], {icon : blueIcon});
                 if (place == ""){ // on ne met pas la ville
