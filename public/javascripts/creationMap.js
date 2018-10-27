@@ -59,9 +59,14 @@ function initMap() {
   addAllMarkers();
 
   map.on('click', function(e){
-    newMarkerMap(e);
-  }); 
-  
+    var x = document.getElementsByClassName("leaflet-popup-content-wrapper");
+    if ( x == null ){ // if no pop up
+      newMarkerMap(e); // add marker
+    }else{ //if at least one popup is open
+      map.closePopup(); // otherwise close popup
+    }
+  });
+
   document.getElementById("addmarker").onclick = function(e){
     newMarkerButton(e);
   };
