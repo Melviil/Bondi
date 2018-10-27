@@ -61,7 +61,7 @@ function initMap() {
   map.on('click', function(e){
     // var x = document.getElementsByClassName("leaflet-popup-content-wrapper");
     // if ( x.length == 0 ){ // if no pop up
-      // newMarkerMap(e); // add marker
+       newMarkerMap(e); // add marker
     // }else{ //if at least one popup is open
       map.closePopup(); // otherwise close popup
     // }
