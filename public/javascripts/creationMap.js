@@ -59,12 +59,12 @@ function initMap() {
   addAllMarkers();
 
   map.on('click', function(e){
-    var x = document.getElementsByClassName("leaflet-popup-content-wrapper");
-    if ( x.length == 0 ){ // if no pop up
-      newMarkerMap(e); // add marker
-    }else{ //if at least one popup is open
+    // var x = document.getElementsByClassName("leaflet-popup-content-wrapper");
+    // if ( x.length == 0 ){ // if no pop up
+      // newMarkerMap(e); // add marker
+    // }else{ //if at least one popup is open
       map.closePopup(); // otherwise close popup
-    }
+    // }
   });
 
   document.getElementById("addmarker").onclick = function(e){
@@ -103,7 +103,7 @@ function newMarkerMap(e){
   lng = e.latlng.lng;
 
   if (document.cookie == ""){ // la personne est connecté
-    alert("Sorry, you should be connected to add a new marker");
+    console.log("Sorry, you should be connected to add a new marker");
   }else{
     person = pseudoUser;
   }
