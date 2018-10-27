@@ -21,7 +21,7 @@ var isLogged = false;
 var imagesliker = [];
 var  urlmap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ;
 function initMap() {
- 
+
 
   if (document.cookie != ""){ // regler les icones du menu si l'utilisateur est connecté ou pas
     getPseudoWithCookie(); // si user co on recupère le pseudo
@@ -35,7 +35,7 @@ function initMap() {
     new L.LatLng(-60.000000, -110.000000),
     new L.LatLng(83.000000, 110.000000));
   map = L.map('map').fitBounds(bounds);
-  options = { 
+  options = {
     minZoom: 2,
     maxZoom: 22,
     opacity: 1.0,
@@ -55,7 +55,7 @@ function initMap() {
       iconAnchor:   [25, 81], // point of the icon which will correspond to marker's location
       shadowAnchor: [4, 62],  // the same for the shadow
       popupAnchor:  [-3, 76] // point from which the popup should open relative to the iconAnchor
-    });  
+    });
   addAllMarkers();
 
   map.on('click', function(e){
@@ -86,7 +86,7 @@ function initMap() {
   });
 
   $( "#logout" ).click(function() {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';  
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     window.location.replace("/");
   });
 
@@ -115,12 +115,12 @@ function newMarkerMap(e){
        if(typeof data.results[1] === 'undefined'){
          place="";
        }else{
-        place = data.results[1].address_components[0].long_name; 
+        place = data.results[1].address_components[0].long_name;
       }
     });
-    if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){ 
+    if ( lat != null && lng != null && person != "" && person != null  && place != null && year != "" && year != null && image != "" && image != null){
      // if (checkIfUrlValid(image)) prochaine version
-      addMarkerDdb(lat, lng, person, place, year, image);   
+      addMarkerDdb(lat, lng, person, place, year, image);
     };
   }
 
@@ -149,12 +149,12 @@ function newMarkerButton(e){
       lat = data.results[0].geometry.location.lat;
       lng = data.results[0].geometry.location.lng;
     });
-    if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){ 
+    if ( lat != null && lng != null && person != "" && person != null && place != ""  && place != null && year != "" && year != null && image != "" && image != null){
       //  if (checkIfUrlValid(image)) pour prochaine version ?
         addMarkerDdb(lat, lng, person, place, year, image);
       }
 };
-// On ajoute tous les markers de la BD à la carte. 
+// On ajoute tous les markers de la BD à la carte.
 //On supprime si il y en a au cas où la personne accès à cette fonction via le menu
 function addAllMarkers(){
   $( ".leaflet-pane.leaflet-marker-pane img" ).remove(); // supprime les marqueurs
@@ -215,7 +215,7 @@ function addAllMarkers(){
               }
               marker.addTo(map);
             }
-          }  
+          }
         }).fail(function(err){
           console.log(err);
         });
@@ -256,7 +256,7 @@ function checkIfUrlValid(image){
   return(image.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
-//fonction qui recupère le cookie dans le navigateur, et 
+//fonction qui recupère le cookie dans le navigateur, et
 function getPseudoWithCookie(){
 
   var token = document.cookie.substring(6); // désolé je n'ai pas réussi autrement, soit Safari soit Firefox
